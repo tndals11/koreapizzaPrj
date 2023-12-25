@@ -1,0 +1,106 @@
+사용자
+create table users (
+user_num int NOT NULL AUTO_INCREMENT,
+user_id varchar(20) NOT NULL,  
+user_passwd text NOT NULL, 
+user_email varchar(100) NOT NULL,
+user_name varchar(20) NOT NULL,
+user_regdate date,
+user_enddate date,
+PRIMARY KEY(user_num)       
+);
+
+주문
+create table orders{
+order_num varchar(15) NOT NULL AUTO_INCREMENT, -> primary key 
+order_total INT NOT NULL,
+final_cost INT NOT NULL,
+comments TEXT,
+order_date DATE NOT NULL,
+order_status varchar(20) NOT NULL,
+PRIMARY KEY(order_num),
+user_id_fk varchar(20) NOT NULL, ----------------------> FK key  
+FOREIGN KEY(user_id_fk) references users(user_id)
+};
+
+
+주문내역 
+create table orderList{
+order_num_fk varchar(15) NOT NULL AUTO_INCREMENT,
+item_id_fk INT NOT NULL AUTO_INCREMENT,
+item_cnt INT NOT NULL,
+FOREIGN KEY(order_num_fk) references orders(order_num),
+FOREIGN KEY(item_id_fk) references items(item_id) 
+};
+
+create table category (
+category_code varchar(2) not null,
+category_name varchar(10) not null,
+primary key(category_code)
+);
+INSERT INTO category VALUES('1', '프리미엄 피자');
+INSERT INTO category VALUES('2', '오리지널 피자');
+INSERT INTO category VALUES('3', '사이드 메뉴');
+INSERT INTO category VALUES('4', '음료 & 기타');
+
+상품목록 
+create table items {
+item_id INT NOT NULL AUTO_INCREMENT,
+category_code varchar(2) not null,
+item_name VARCHAR(20) NOT NULL,
+item_intro TEXT NOT NULL,
+item_price INT NOT NULL,
+PRIMARY KEY(item_id),
+FOREIGN KEY(category_code) references category(category_code)   
+};
+
+문의페이지 분류
+create table options (
+option_code varchar(2) not null,
+option_name varchar(10) not null,
+primary key(option_code)
+);
+INSERT INTO options VALUES('1','회원문의');
+INSERT INTO options VALUES('2','주문문의');
+INSERT INTO options VALUES('3','기타문의');
+
+문의페이지
+create table ask (
+id int NOT NULL,
+user_num int NOT NULL,
+option_code varchar(2) not null,
+subject varchar(255) not null,
+writer varchar(10) not null,
+content text,
+visit int,
+regdate date,
+orgName varchar(255),
+savedFileName varchar(255),
+savedFilePathName varchar(255),
+savedFileSize bigint,
+folderName varchar(10),
+ext varchar(20),
+grp int,
+seq int,
+depth int,
+primary key(id),
+FOREIGN KEY(user_num) references users(category_code),  
+FOREIGN KEY(option_code) references options(option_code)   
+);
+
+
+
+
+
+ 
+
+SELECT * FROM member WHERE userName = '홍길동';
+
+SELECT COUNT(*) FROM users "WHERE user_id = '"+words+"';
+
+
+
+UPDATE users SET user_name = #{userName} WHERE user_num = #{userNum};			
+UPDATE users SET user_st = '90' , user_enddate = now(); WHERE user_num = #{userNum}
+
+
