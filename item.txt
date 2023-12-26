@@ -1,340 +1,657 @@
-<!DOCTYPE html>
 <html lang="ko">
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 회원관리 페이지</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" th:href="@{/css/aside.css}">
-    <link rel="stylesheet" th:href="@{/css/reset.css}">
-    <style>
-        /* 메인 컨테이너 스타일 시작 */
-        .main-container {
-          height: 1000px;
-          padding-left: 30px;
-<!--          background-color: #f6f6f6;-->
-          background-color: white;
-        }
-        .content-wrap {
-          padding-bottom: 50px;
-          margin-bottom: 40px;
-          background-color: white;
-        }
-        hr {
-          border: 0;
-          border:1px solid #db6186;
-        }
-         .header-title h2 {
-              font-size: 22px;
-              margin-bottom: 10px;
-          }
-         .header-title {
-            display:flex;
-            justify-content: space-between;
-         }
-        .user-list p {
-          margin-top: 15px;
-          margin-left: 20px;
-          font-size: 16px;
-        }
-        .content-wrap select {
-          margin-top: 15px;
-          margin-left: 18px;
-        }
-        .top-option {
-          display: flex;
-          justify-content: space-between;
-        }
-        .content-wrap .search-wrap {
-          margin-top: 15px;
-          margin-right: 18px;
-        }
-        .user-list table {
-          margin: 10px auto;
-          width: 98%;
-          border-collapse: collapse;
-          text-align: center;
-        }
-        .user-list th {
-         background-color: #f7f7f7;
-         border-bottom: 1px solid #eee;
-        }
-        form {
-           margin-right: 17px;
-        }
-    th {
-      padding: 15px 30px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+    /* 초기화 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    td {
-      padding: 10px 20px;
-      border-bottom: 1px solid #eee;
+    ul li {
+      list-style: none;
     }
-    tbody tr td:nth-child(3) {
-         text-align: start;
-    }
-    tbody tr td:nth-child(4) {
-         text-align: end;
-    }
-    .blue {
-      color: royalblue;
-      padding: 5px 15px;
-      border: 0;
-      background-color: transparent;
-      border-bottom: 1px solid royalblue;
-    }
-     .tomato {
-      color: tomato;
-      padding: 5px 15px;
-      border: 0;
-      background-color: transparent;
-      border-bottom: 1px solid tomato;
-    }
-    .blueviolet {
-      color: blueviolet;
-      padding: 5px 15px;
-      border: 0;
-      background-color: transparent;
-      border-bottom: 1px solid blueviolet;
-    }
-    .black {
-        background-color: black;
-        color: white;
-    }
-    .open button {
+    body {
       font-family: 'Noto Sans KR', sans-serif;
-      cursor: pointer;
     }
-     .user-btn {
-      text-align: end;
+    a {
+      text-decoration: none;
     }
-    .user-btn button {
-      padding: 10px 20px;
-      border: 0;
-      background-color: tomato;
-      margin-right: 18px;
-      border-radius: 5px;
+    li {
+      color: black;
+    }
+/* 헤더/ 상단메뉴 스타일 시작 */
+nav {
+  border: 0;
+  width: 100%;
+  padding-bottom: 20px;
+  box-shadow: 0px 0px 5px 0 rgba(90, 91, 95, 0.4);
+  position: fixed;
+  background-color: white;
+}
+
+.nav-wrap {
+  background-color: white;
+  width: 1280px;
+  margin: 0 auto;
+  padding: 20px 0;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-wrap #logo {
+  height: 50px;
+}
+
+.nav-wrap #logo img {
+  width: 100%;
+  height: 110px;
+  margin-top: -10px;
+}
+
+.nav-wrap ul {
+  display: flex;
+  margin-top: 17px;
+}
+
+.nav-wrap ul li {
+  list-style: none;
+  font-size: 23px;
+  margin: 0px 25px;
+  padding: 6px 25px;
+}
+
+.nav-wrap ul li:hover {
+  cursor: pointer;
+  background-color: #cf152d;
+  color: white;
+  border-radius: 30px;
+}
+
+.nav-wrap ul .cart {
+  margin: 0 25px;
+}
+
+.nav-wrap ul div img {
+  width: 100%;
+  height: 40px;
+}
+
+.nav-wrap ul div img:hover {
+  cursor: pointer;
+}
+
+
+
+/* 배너이미지 설정 */
+.bg {
+  padding-top: 122px; 
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-position: center; */
+  background-color: transparent;      
+}
+
+
+
+/* 카테고리/중간버튼 스타일 시작 */
+.category {
+  width: 1280px;
+  height: 165px;
+  margin: 38px auto; 
+}
+
+.category .address ul {
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+  background-color: transparent;
+  border-radius: 8px;
+  box-shadow: 0 0 5px 0 rgba(90, 91, 95, 0.4);
+}
+
+.category .address ul:hover {
+  cursor: pointer;
+}
+
+.category .address ul li {
+  background-color: transparent;
+  color: black;
+  font-size: 27px;
+}
+
+.category .address ul li img {
+  width: 100%;
+  height: 40px;
+}
+
+.category .address ul li:nth-child(1) {
+  margin-right: 5px;
+}
+
+.category .order-btn {
+  margin-top: 25px;
+  height: 100px;
+}
+
+.category .order-btn ul {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 5px 0 rgba(90, 91, 95, 0.4);
+}
+
+.category .order-btn ul div {
+  margin-top: 5px;
+}
+
+.category .order-btn ul:hover {
+  cursor: pointer;
+  border: 0;
+  border: 3px solid #cf152d
+}
+
+.category .order-btn ul li:nth-child(2) {
+  font-size: 30px;
+  margin: 20px 0 0 25px;
+}
+
+.category .order-btn ul li img {
+  width: 100%;
+  height: 70px;
+}
+
+.category .order-btn ul>li .arrow {
+  margin-left: 25px;
+  color: #cf152d;
+  font-size: 35px;
+}
+
+  /* 메인 영역 */
+  .main-title {
+    padding-top: 200px;
+    text-align: center;
+  }
+  .main-container {
+    width: 1280px;
+    display: flex;
+    margin: 0 auto;      
+    height: 800px;
+  }
+  .content-wrap {
+    width: 100%;
+  }
+  .content2 {
+    margin-top: 60px;
+    width: 100%;
+    height: 600px;
+    box-shadow:0 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+  }
+  #modal-body {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 30px 40px;
+    font-size: 20px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr {
+    height: 35px;
+    text-align: center;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    font-size: 18px;
+    /* background-color: #f7f7f7; */
+  }
+  th {
+    background-color: #cf152d;
+    color: white;
+  }
+  .count {
+    text-align: right;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  h2 {
+    text-align: center;
+  }
+  td:nth-child(1) {
+    width: 5%;
+  }
+  td:nth-child(2) {
+    width: 20%;
+    text-align: left;
+    padding: 8px;
+  }
+  td:nth-child(3) {
+    width: 20%;
+    text-align: left;
+    padding: 8px;
+  }
+  td:nth-child(4) {
+    width: 10%;
+  }
+  td:nth-child(5) {
+    width: 15%;
+    padding-top: 5px;
+  }
+  p {
+    text-align: right;
+  }
+  
+  .page {
+    width: 100%;
+    height: 30px;
+    margin-top: 20px;
+    background-color: #cf152d;
+  }
+  .page ul {
+    width: 100px;
+    display: flex;
+    margin: 0 auto;
+  } 
+  .page li a {
+    color: black;
+  }
+  .pagination-container {
+    width: 100%;
+    height: 40px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .pagination{
+    width: 800px;
+    height: 40px;
+    display: flex;
+    margin: 0 auto;
+}
+  .pgn-content {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+  .pgn-content li {
+    display: inline;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+  }
+  .pgn-content a {
+    color: black;
+    padding: 5px 12px;
+    font-size: 18px;
+    border: 0;
+    margin-left: 5px;
+  }
+  
+  .pgn-content a:hover {
+    color: #cf152d;
+  }
+
+  .first:hover, .last:hover, .arrow-left:hover, .arrow-right:hover {
+    color: #cf152d;
+  }
+
+  .first {
+    margin-right: 15px;
+  }
+
+  .last {
+    margin-left: 15px;
+  }
+  /* modal 팝업창 */
+  #modal-container {
+    position: fixed;
+    z-index: 1;
+    padding-top: 150px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: none;
+    background-color: rgba(0,0,0,0.4);
+  }
+  #modal-wrap {
+    width: 800px;
+    height: 650px;
+    position: absolute;
+    top: 50%;
+    left: 50%;  
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    background-color: white;
+  }
+
+  #close-btn {
+  float:right;
+  font-weight: bold;
+  font-size:30px;
+  cursor: pointer;
+  color: white;
+  margin-right: 50px;
+  margin-top: 5px;
+  } 
+  .main-title {
+      width: 100%;
+      letter-spacing: 2px;
+      font-size: 20px;
+      border-bottom: 1px solid #aaa;
+      padding-top: 40px;
+      padding-bottom: 20px;
+      background-color: #cf152d;
+      border-top-right-radius: 15px;
+      border-top-left-radius: 15px;
+    }
+    .main-title ul  {
+      display: flex;
+      justify-content: space-between;
+    }
+    .title {
+      margin-left: 320px;
+      margin-bottom: 20px;
       color: white;
-      cursor: pointer;
     }
-    .bottom-center { text-align: center; }
-    .list-btn {
-      text-align: end;
-      margin-right: 18px;
-    }
-    .list-btn1 button {
-      border: 0;
-      padding: 8px 15px;
-      background-color: #118cfd;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-left: 20px;
-      font-weight: 700;
-    }
-    .list-btn2 button {
-      border: 0;
-      padding: 8px 15px;
-      background-color: #c71b29;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-right: 20px;
-   }
-    .search-btn {
-      border: 1px solid #767676;
-      background-color: transparent;
-      padding: 1px 5px;
-      cursor: pointer;
-    }
-    .btn-wrap {
-     display: flex;
-     justify-content: space-between;
-    }
-    .download-style:hover {
-        opacity: 0.4;
-    }
-    .count {
-        color: red;
-    }
-    .search-style input[type="submit"]{
-        background-color: black;
-        color: white;
-        border: 0px;
-        padding: 7px 8px;
-        line-height: 16px;
-    }
-    .search-style input[type="text"]{
-        border: 1px solid #c7c7c7;
-        padding: 7px 8px;
-    }
-   .pl{
-        width: 150px;
-        border: 1px solid #c7c7c7;
-        box-sizing: border-box;
-        padding: 3.5px 8px;
-        font-family: 'Noto Sans KR', sans-serif;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 16px;
-    }
-    .pl:focus {
-        outline: 1px solid royalblue;
-    }
-    .bold {
-      font-weight: 700;
-    }
-    </style>
+    /* 별 이미지 css */
+  #myform fieldset{
+  display: inline-block;
+  direction: rtl;
+  border:0;
+  margin-top: 40px;
+  margin-left: 200px;
+  }
+
+  #myform fieldset legend{
+      text-align: right;
+  }
+  #myform input[type=radio]{
+      display: none;
+  }
+  #myform label{
+      font-size: 3.5em;
+      color: transparent;
+      text-shadow: 0 0 0 #f0f0f0;
+      letter-spacing: 3px;
+  }
+  #myform input[type=radio]:checked ~ label{
+      text-shadow: 0 0 0 #e9be0f;
+  }
+  #myform input[type=radio]:checked ~ label:hover {
+    text-shadow: 0 0 0 #e9be0f;
+  }
+  #reviewContents {
+    width: 100%;
+    height: 150px;
+    padding: 12px;
+    box-sizing: border-box;
+    border: solid 1.5px #D3D3D3;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+  }
+  .main-text {
+    margin-top: 50px;
+    padding: 30px 30px;
+  }
+  .btn-wrap {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-wrap button {
+    border: 0;
+    padding: 13px 60px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+  }
+  .btn-wrap button:hover {
+    opacity: 0.9;
+  }
+  .btn1 button{
+    background-color: black;
+    color: white;
+    margin-right: 60px;
+  }
+  .btn2 button{
+    background-color: #cf152d;
+    color: white;
+  }
+  .btn-style {
+    border: 0;
+    background-color: transparent;
+    padding: 10px 5px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 17px;
+    color: #cf152d;
+    text-decoration: underline;
+  }
+  td span {
+    font-size: 16px;
+  }
+
+/*---footer영역---*/
+footer {
+  background-color: #444;
+  padding: 30px 0 10px 0;
+}
+
+.footer-wrap {
+  width: 1280px;
+  margin: 0 auto;
+}
+
+.footer-wrap h2 {
+  color: white;
+  letter-spacing: 2px;
+  font-size: 25px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-top span {
+  color: white;
+  font-size: 30px;
+  margin-left: 15px;
+}
+
+.footer-top span i:hover {
+  color: gray;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.footer-bottom {
+  margin-top: 30px;
+  padding-top: 3px;
+  font-size: 10px;
+  color: white;
+  border-top: 1px solid white;
+  text-align: center;
+}
+  </style>
 </head>
 <body>
-<div class="body-container">
-    <!--aside-->
-    <th:block th:replace="~{fragment/aside::asideFragment}"></th:block>
-    <!--aside-->
-
-    <div class="main-container">
-        <div class="content-container">
-            <header>
-                <div class="header-title">
-                    <h2>메뉴관리 리스트</h2>
-                    <h2><i class="fa-solid fa-user-tie" style="margin-right: 5px"></i>코리아피자 관리자</h2>
-                </div>
-            </header>
-            <hr>
-            <div class="content-wrap">
-                <div class="user-list">
-                    <div class="top-option">
-                        <div >
-                            <p>등록된 메뉴 : <span class="count">[[${cnt}]]</span>개</p>
-                        </div>
-                        <div class="search-style">
-                            <form method="get" action="/admin/itemList" onsubmit="return searchList()">
-                                <select name="searchType" id="searchType" class="pl">
-                                    <option value="">선택</option>
-                                    <option value="category_code" >카테고리 번호</option>
-                                    <option value="item_name">아이템 이름</option>
-                                    <option value="item_price">아이템 가격</option>
-                                    <option value="item_intro">아이템 코멘트</option>
-                                </select>
-                                <input type="text" name="words" placeholder="검색어 입력">
-                                <input type="submit" value="검색" class="search-btn">
-                            </form>
-                        </div>
-                    </div>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>카테고리</th>
-                            <th>메뉴이름</th>
-                            <th>인트로</th>
-                            <th>가격</th>
-                            <th>등록일</th>
-                            <th>사진</th>
-                            <th>비고</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="open" th:each="item, i : ${item}">
-                            <td th:if="${item.categoryCode} == '1'"><span style="padding: 4px 10px; background-color: #fbeef2; color: #d13564;border-radius: 5px; font-weight: 600;">프리미엄 피자</span></td>
-                            <td th:if="${item.categoryCode} == '2'"><span style="padding: 4px 10px; background-color: #e3f5ff; color: #219dd1;border-radius: 5px; font-weight: 600;">오리지널 피자</span></td>
-                            <td th:if="${item.categoryCode} == '3'"><span style="padding: 4px 10px; background-color: #e4faf3; color: #2fb888;border-radius: 5px; font-weight: 600;">사이드 메뉴</span></td>
-                            <td th:if="${item.categoryCode} == '4'"><span style="padding: 4px 10px; background-color: #eff0f1; color: #6b6e70;border-radius: 5px; font-weight: 600;">음료&기타</span></td>
-                            <td>[[${item.itemName}]]</td>
-                            <td>[[${item.itemIntro}]]</td>
-                            <td class="bold">[[${item.itemPrice}]]원</td>
-                            <td>[[${item.regdate}]]</td>
-                            <td>
-                                <th:block th:if="${not #strings.isEmpty(item.orgName)}">
-                                    <a class="download-style" th:href="@{/download?(filename=${item.savedFilePathName})}"><i class="fa-regular fa-image"></i></a>
-                                </th:block>
-                            </td>
-                            <td>
-                                <button class="blue" th:onclick="itemView([[${item.itemName}]])">보기</button>
-                                <button class="blueviolet" th:onclick="itemUpdate([[${item.itemId}]])">수정</button>
-                                <button class="tomato" th:onclick="itemDelete([[${item.itemName}]])">삭제</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="btn-wrap">
-                        <div class="list-btn1" >
-                            <a href="/admin/addItem"><button>메뉴등록</button></a>
-                        </div>
-                        <div class="list-btn2">
-                            <a href="/admin/itemList"><button>목록으로</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="bottom-center">
-                    <a href="#" th:if="${page.page <= 1}"></a>
-                    <a th:href="@{/admin/itemList?(page=${page.page-1})}" th:unless="${page.page <= 1}">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </a>
-                    <!-- page number -->
-                    <!-- #numbers.sequence() 숫자를 순차적으로 생성하고 +1씩 출력-->
-                    <!-- i => 페이지번호(id) -->
-                    <a th:each="i : ${ #numbers.sequence(page.startPage, page.endPage, 1) }" th:href="@{/admin/itemList?(page=${i})}">
-                        <th:block th:if="${page.page eq i}">
-                        <span style="color:#f00; ">
-                            <strong>[[${i}]]</strong>
-                        </span>
-                        </th:block>
-                        <th:block th:unless="${page.page eq i}">
-                        <span>
-                            [[${i}]]
-                        </span>
-                        </th:block>
-                    </a>
-                    <a href="#" th:if="${page.page >= page.totalPage}" ></a>
-
-                    <a th:href="@{/admin/itemList?(page=${page.page + 1})}" th:unless="${page.page >= page.totalPage}">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </a>
-                    <!----------------------------------------------------------------------------------------------------->
-            </div>
+  <!-- header영역 -->
+  <header>
+    <nav>
+      <div class="nav-wrap">
+        <ul>
+          <a href="#"><li>메뉴</li></a>
+          <a href="#"><li>이벤트</li></a>
+          <a href="#"><li>매장</li></a>
+        </ul>
+        <div id="logo">
+          <a href="./"><img src="./images/logo.png" alt=""></a>
         </div>
-    <script>
-        function itemView(itemName) {
-            location.href='/admin/itemView?itemName='+itemName;
-        }
+        <ul>
+          <a href="./create_user.html"><li>회원가입</li></a>
+          <a href="./login.html"><li>로그인</li></a>
+            <div class="cart"><img src="./images/cart.png" alt=""></div>
+            <div class="person"><img src="./images/person.png" alt=""></div>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
-        function itemDelete(itemName) {
-                if(confirm(itemName + ' 메뉴를 삭제하시겠습니까?')) {
-                 location.href='/admin/itemDelete?itemName='+itemName;
-                }
-        }
+  <!-- main 영역 -->
+  <div class="main-title">
+    <h1>주문내역</h1>
+  </div>
+  <main>
+    <div class="main-container">
+        <div class="content-wrap">
 
-        function itemUpdate(itemId) {
-            location.href='/admin/itemUpdate?itemId='+itemId;
-        }
+          <div class="content2">
+            <div id="modal-body">
+              <div class="count">
+                전체주문 수 : <span>0</span>개
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>상품번호</th>
+                        <th>상품명</th>
+                        <th>요청사항</th>
+                        <th>가격</th>
+                        <th>주문일자</th>
+                    </tr>
+                </thead>
+                <!-- ajax추가할 곳 -->
+                <tbody>
+                    <tr>
+                      <td><span>1</span></td>
+                      <td><span>불고기 피자</span></td>
+                      <td><span>요청사항</span></td>
+                      <td><span>38,000</span></td>
+                      <td>
+                        <div>
+                          <span style="font-size: 15px;">2023-11-22</span>
+                        </div>
+                        <button type="button" onclick="popupBtn()" class="btn-style" style="font-size: 15px;">리뷰쓰기</button>
+                      </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- modal 팝업창 -->
+            <div id="modal-container">
+              <div id="modal-wrap"> 
+                <div class="main-title">
+                  <ul>
+                    <li class="title">
+                      <h1>리뷰쓰기</h2>
+                    </li>
+                    <li>
+                      <span id="close-btn">&times;</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="main-body">
+                  <form class="mb-3" name="myform" id="myform" method="post">
+                    <fieldset>
+                      <span class="text-bold"></span>
+                      <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                        for="rate1">★</label>
+                      <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                        for="rate2">★</label>
+                      <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                        for="rate3">★</label>
+                      <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                        for="rate4">★</label>
+                      <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                        for="rate5">★</label>
+                    </fieldset>
+                    <div class="main-text">
+                      <textarea class="col-auto form-control" type="text" id="reviewContents"
+                      placeholder="한글기준 50자이내로 작성해주세요. 솔직한 리뷰는 KOREAPIZZA에 도움이 됩니다!."></textarea>
+                    </div>
+                    <div class="btn-wrap">
+                        <div class="btn2">
+                          <button type="submit">등록</button>
+                        </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
 
-        function move() {
-            location.href = "/admin/itemList";
-        }
+            <!-- modal창 끝 -->
+              <div class="pagination-container">
+                <div class="pagination">
+                  <ul class="pgn-content">
+                    <li><a href="#" class="first">처음페이지</a></li>
+                    <li><a href="#" class="arrow-left">&laquo;  </a></li>
+                    <li><a href="#" class="active-num">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">6</a></li>
+                    <li><a href="#">7</a></li>
+                    <li><a href="#">8</a></li>
+                    <li><a href="#">9</a></li>
+                    <li><a href="#" class="arrow-right">&raquo;</a></li>
+                    <li><a href="#" class="last">마지막페이지</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-          function searchList() {
-            let searchType = document.querySelector("#searchType");
-            let words = document.querySelector("input[name=words]");
-
-        if( searchType.options[searchType.selectedIndex].value == "" ) {
-            alert("검색 타입을 선택하세요");
-            searchType.focus();
-            return false;
-        }
-
-        if( words.value == "" ) {
-            alert("검색어를 입력하세요");
-            words.focus();
-            return false;
-        }
-}
-    </script>
+  <!-- footer 영역 -->
+  <footer>
+    <div class="footer-wrap">
+      <div class="footer-top">
+        <div class="footer-logo">
+          <h2>KOREA PIZZA</h2>
+        </div>
+        <div class="footer-sns">
+          <span><i class="fa-brands fa-square-facebook"></i></span>
+          <span><i class="fa-brands fa-google"></i></span>
+          <span><i class="fa-brands fa-instagram"></i></span>
+        </div>
+      </div>
+      <div class="footer-bottom">Copyright &copy; 2023 KOREAGROUP.ALL RIGHTS RESERVED</div>
+    </div>
+  </footer>
 </body>
 
+<!-- script 영역 -->
+<script>
+  const modal = document.getElementById('modal-container');
+
+  // 화면을 띄우는 버튼
+  function popupBtn() {
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+
+  // 화면을 끄는 버튼
+  const closeBtn = document.querySelector('#close-btn').addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    document.forms['myform'].reset();
+  });
+
+</script>
 </html>
