@@ -19,6 +19,12 @@ PRIMARY KEY(item_id),
 FOREIGN KEY(category_code) references category(category_code)
 );
 
+create table category(
+category_code varchar(10) NOT NULL ,
+category_name varchar(10) NOT NULL,
+primary key(category_code)	
+);
+
 
 
 create table review(
