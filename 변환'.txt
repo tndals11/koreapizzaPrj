@@ -1,1 +1,0 @@
-th:text="|${#numbers.formatInteger(item.totalPrice, 0, 'COMMA')}원|"
