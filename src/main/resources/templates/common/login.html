@@ -158,6 +158,18 @@
 
 </body>
     <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var error = urlParams.get("error");
+
+        if (error === "session") {
+            alert("로그인 후 이용 가능합니다.");
+            localStorage.clear();
+        }
+
+    });
+
+
      $(function () {
      let checkID = RegExp(/^[a-z0-9]{6,20}$/);
      let checkPW = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{8,}$/);

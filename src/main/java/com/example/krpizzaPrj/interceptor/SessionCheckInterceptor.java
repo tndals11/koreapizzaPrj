@@ -16,7 +16,7 @@ public class SessionCheckInterceptor implements HandlerInterceptor { // 구현 O
         HttpSession hs = request.getSession(); // => session
         // LoginInfo(userid, passwd, nam...) - 객체
         if ( hs == null || hs.getAttribute("user") == null ) { // session을 체크한다
-            response.sendRedirect("/common/login"); // => 잘못된 접속이면 팅겨낸다
+            response.sendRedirect("/common/login?error=session"); // => 잘못된 접속이면 팅겨낸다
             return false;
         }
 
