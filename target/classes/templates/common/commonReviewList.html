@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+        <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/height.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <style>
+      .container {
+        width: 100%;
+        padding-top: 140px;
+        padding-bottom: 50px;
+      }
+
+      .content3 {
+        width: 1280px;
+        margin: 0 auto;
+      }
+
+      .list-title {
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+
+      .list-content1 {
+        width: 1100px;
+        height: 200px;
+        margin-left: 120px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        border-bottom-right-radius: 50px;
+        margin-bottom: 30px;
+      }
+
+      .list-box {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        padding: 15px;
+      }
+
+      .list-img {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 1px solid black;
+      }
+
+      .list-content1 ul p {
+        font-size: 18px;
+        margin-left: 10px;
+        color: #ffd400;
+      }
+
+      .name-regdate {
+        font-size: 15px;
+        margin-top: 14px;
+        margin-left: 10px;
+        color: black;
+        width: 230px;
+      }
+
+      .mid {
+        margin-left: 5px;
+        margin-right: 5px;
+        color: #aaa;
+      }
+
+      .list-num {
+        display: flex;
+        font-size: 20px;
+        margin-left: 610px;
+        align-items: center;
+        padding-right: 8px;
+      }
+
+      .list-box2 {
+        padding-left: 20px;
+        height: 50px;
+      }
+
+    </style>
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+
+<!--header-->
+<div th:if = "${session.user == null}">
+    <th:block th:replace="~{fragment/header::headerFragment}"></th:block>
+</div>
+<div th:if = "${session.user != null}">
+    <th:block th:replace="~{fragment/afterLoginHeader::afterHeaderFragment}"></th:block>
+</div>
+<!--header-->
+
+<!-- main 영역 -->
+<main>
+    <div class="container">
+        <div class="list-title">
+            <h1>리뷰 게시판</h1>
+        </div>
+        <div th:if="${review.score != 0}" class="content3" th:each="review, i : ${review}">
+            <div class="list-content1">
+                <form action="#" method="post">
+                    <ul>
+                        <li>
+                            <div class="list-box">
+                                <div class="list-img" style="overflow: hidden;">
+                                    <img src="/images/review_imgs/admin2.png" alt="" class="img-profile">
+                                </div>
+                                <ul>
+                                    <li style="display: flex;">
+                                        <p th:if="${review.score} == 1">★</p>
+                                        <p th:if="${review.score} == 2">★★</p>
+                                        <p th:if="${review.score} == 3">★★★</p>
+                                        <p th:if="${review.score} == 4">★★★★</p>
+                                        <p th:if="${review.score} == 5">★★★★★</p>
+                                    </li>
+                                    <li class="name-regdate">
+                                        <span >[[${review.userId}]]</span><span class="mid">|</span><span>[[${review.regdate}]]</span>
+                                    </li>
+                                </ul>
+                                <div class="list-num">
+                                    <span>[[${review.id}]]</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="list-box2">
+                                <span>[[${review.reviewcontent}]]</span>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</main>
+<!-- footer -->
+<th:block th:replace="~{fragment/footer::footerFragment}"></th:block>
+<!-- footer -->
+</body>
+</html>

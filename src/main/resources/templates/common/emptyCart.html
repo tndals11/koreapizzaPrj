@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/height.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        /* 초기화 */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        ul li {
+          list-style: none;
+        }
+
+        body {
+          font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          color: white;
+        }
+
+
+        /* 헤더/ 상단메뉴 스타일 시작 */
+        nav {
+          border: 0;
+          width: 100%;
+          padding-bottom: 20px;
+          box-shadow: 0px 0px 5px 0 rgba(90, 91, 95, 0.4);
+          position: fixed;
+          background-color: white;
+        }
+
+        .nav-wrap {
+          background-color: white;
+          width: 1280px;
+          margin: 0 auto;
+          padding: 20px 0;
+          color: black;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .nav-wrap #logo {
+          height: 50px;
+        }
+
+        .nav-wrap #logo img {
+          width: 100%;
+          height: 110px;
+          margin-top: -10px;
+        }
+
+        .nav-wrap ul {
+          display: flex;
+          margin-top: 17px;
+        }
+
+        .nav-wrap ul li {
+          list-style: none;
+          font-size: 23px;
+          margin: 0px 25px;
+          padding: 6px 25px;
+          color: black;
+        }
+
+        .nav-wrap ul li:hover {
+          cursor: pointer;
+          background-color: #cf152d;
+          color: white;
+          border-radius: 30px;
+        }
+
+        .nav-wrap ul .cart {
+          margin: 0 25px;
+        }
+
+        .nav-wrap ul div img {
+          width: 100%;
+          height: 40px;
+        }
+
+        .nav-wrap ul div img:hover {
+          cursor: pointer;
+        }
+
+        /* 배너이미지 설정 */
+        .bg {
+          padding-top: 122px;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-size: cover;
+          /* background-position: center; */
+          background-color: transparent;
+        }
+
+        /* 카테고리/중간버튼 스타일 시작 */
+        .category {
+          width: 1280px;
+          height: 165px;
+          margin: 38px auto;
+        }
+
+        .category .address ul {
+          display: flex;
+          justify-content: center;
+          padding-top: 7px;
+          background-color: transparent;
+          border-radius: 8px;
+          box-shadow: 0 0 5px 0 rgba(90, 91, 95, 0.4);
+        }
+
+        .category .address ul:hover {
+          cursor: pointer;
+        }
+
+        .category .address ul li {
+          background-color: transparent;
+          color: black;
+          font-size: 27px;
+        }
+
+        .category .address ul li img {
+          width: 100%;
+          height: 40px;
+        }
+
+        .category .address ul li:nth-child(1) {
+          margin-right: 5px;
+        }
+
+        .category .order-btn {
+          margin-top: 25px;
+          height: 100px;
+        }
+
+        .category .order-btn ul {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          background-color: white;
+          border-radius: 8px;
+          box-shadow: 0 0 5px 0 rgba(90, 91, 95, 0.4);
+        }
+
+        .category .order-btn ul div {
+          margin-top: 5px;
+        }
+
+        .category .order-btn ul:hover {
+          cursor: pointer;
+          border: 0;
+          border: 3px solid #cf152d
+        }
+
+        .category .order-btn ul li:nth-child(2) {
+          font-size: 30px;
+          margin: 20px 0 0 25px;
+        }
+
+        .category .order-btn ul li img {
+          width: 100%;
+          height: 70px;
+        }
+
+        .category .order-btn ul>li .arrow {
+          margin-left: 25px;
+          color: #cf152d;
+          font-size: 35px;
+        }
+
+        /* main 영역 */
+
+        .container {
+          width: 1280px;
+          display: flex;
+          align-items: center;
+          margin: 0 auto;
+          height: 1000px;
+        }
+
+        .content-wrap {
+          width: 100%;
+          height: 600px;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+          border-radius: 30px;
+        }
+
+        .content1 {
+          width: 100%;
+          padding-top: 120px;
+          margin: 0 auto;
+          text-align: center;
+        }
+
+        .content1 h1 {
+          margin-top: 10px;
+        }
+
+        .btnbox {
+          margin-top: 90px;
+        }
+
+        .btnbox a {
+          border: 0;
+          background-color: #cf152d;
+          padding: 20px 110px;
+          font-family: 'Noto Sans KR', sans-serif;
+          font-size: 20px;
+          cursor: pointer;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+          border-radius: 15px;
+          color: white;
+        }
+
+        .btnbox a:hover {
+          opacity: 0.9;
+        }
+
+
+        /* footer 스타일 시작 */
+        footer {
+          background-color: #444;
+          padding: 30px 0 10px 0;
+        }
+
+        .footer-wrap {
+          width: 1280px;
+          margin: 0 auto;
+        }
+
+        .footer-wrap h2 {
+          color: #aaa;
+          letter-spacing: 2px;
+          font-size: 25px;
+        }
+
+        .footer-top span {
+          color: white;
+          margin-left: 15px;
+        }
+
+        .footer-top span i:hover {
+          color: gray;
+          transition: 0.5s;
+          cursor: pointer;
+        }
+
+        .footer-top {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .footer-sns {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+
+        .footer-sns span {
+          color: #aaa;
+          font-size: 25px;
+        }
+
+        .footer-sns span i:hover {
+          color: white;
+          transition: 0.5s;
+          cursor: pointer;
+        }
+
+        .footer-main {
+          width: 1280px;
+        }
+
+        .footer-content {
+          font-size: 14px;
+          color: #aaa;
+          text-align: left;
+          margin-top: 20px;
+        }
+
+        .footer-content ul li:nth-child(2) {
+          margin-top: 5px;
+        }
+
+        .footer-content ul li:nth-child(3) {
+          margin-top: 5px;
+        }
+
+        .footer-content ul li:nth-child(4) {
+          margin-top: 5px;
+          margin-bottom: 50px;
+        }
+
+        .footer-bottom {
+          border-top: 1px solid white;
+          font-size: 12px;
+          color: #aaa;
+          text-align: center;
+        }
+
+        .footer-bottom p {
+          margin-top: 7px;
+        }
+
+        .footer-sns span a {
+          color: white;
+        }
+    </style>
+</head>
+
+<body>
+<!--header-->
+<div th:if = "${session.user == null}">
+    <th:block th:replace="~{fragment/header::headerFragment}"></th:block>
+</div>
+<div th:if = "${session.user != null}">
+    <th:block th:replace="~{fragment/afterLoginHeader::afterHeaderFragment}"></th:block>
+</div>
+<!--header-->
+
+<!-- main 영역 -->
+<main>
+    <div class="container">
+        <div class="content-wrap">
+            <div class="content1">
+                <img src="/images/cart_imgs/emptycart.png" decoding="async">
+                <h1>장바구니가 비어 있습니다.</h1>
+                <div class="btnbox">
+                    <a th:href="@{/common/premium}">메뉴 담으러가기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- footer -->
+<th:block th:replace="~{fragment/footer::footerFragment}"></th:block>
+<!-- footer -->
+
+<script>
+
+history.pushState(null, null, "/common/emptyCart");
+
+window.onpopstate = function(event) {
+    history.pushState(null, null, "/common/emptyCart");
+    window.location.replace("/common/premium");
+};
+
+</script>
+</body>
+
+</html>

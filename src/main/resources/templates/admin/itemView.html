@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자 관리자페이지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/aside.css}">
+    <style>
+        ul li {
+          list-style: none;
+        }
+         /* 메인 컨테이너 스타일 시작 */
+         .main-container {
+           height: 1000px;
+           padding-left: 30px;
+            background-color: white;
+         }
+         .content-wrap {
+           background-color: white;
+           padding-bottom: 50px;
+           margin-bottom: 40px;
+         }
+          hr {
+          border: 0;
+          border:1px solid #db6186;
+        }
+          .header-title h2 {
+               font-size: 22px;
+               margin-bottom: 10px;
+           }
+          .header-title {
+            display:flex;
+            justify-content: space-between;
+          }
+         .user-list p {
+           margin-top: 15px;
+           margin-left: 20px;
+           font-size: 16px;
+         }
+
+         .content-wrap select {
+           margin-top: 15px;
+           margin-left: 18px;
+         }
+
+         .top-option {
+           display: flex;
+           justify-content: space-between;
+         }
+         .user-list {
+          text-align: center;
+
+         }
+       .user-list p {
+        font-size: 24px;
+       }
+       .user-list img {
+        width: 400px;
+       }
+
+     .blue {
+       background-color: royalblue;
+       color: white;
+     }
+     .tomato {
+       background-color: tomato;
+       color: white;
+     }
+     .blueviolet {
+      background-color: blueviolet;
+      color: white;
+     }
+     .black {
+         background-color: black;
+         color: white;
+     }
+     .open button {
+       border: 0;
+       padding: 5px 15px;
+       font-family: 'Noto Sans KR', sans-serif;
+       border-radius: 3px;
+       cursor: pointer;
+     }
+     .user-btn {
+       text-align: end;
+     }
+     .user-btn button {
+       padding: 10px 20px;
+       border: 0;
+       background-color: tomato;
+       margin-right: 18px;
+       border-radius: 5px;
+       color: white;
+       cursor: pointer;
+     }
+     .bottom-center { text-align: center; }
+     .list-btn {
+       text-align: end;
+       margin-right: 18px;
+     }
+     .list-btn1 button {
+       border: 0;
+       padding: 8px 15px;
+       background-color: #679be1;
+       color: white;
+       border-radius: 5px;
+       cursor: pointer;
+       margin-left: 20px;
+     }
+     .list-btn2 button {
+       border: 0;
+       padding: 8px 15px;
+       background-color: #c71b29;
+       color: white;
+       border-radius: 5px;
+      cursor: pointer;
+      margin-right: 20px;
+    }
+       .search-btn {
+       border: 1px solid #767676;
+       background-color: transparent;
+       padding: 1px 5px;
+       cursor: pointer;
+     }
+     .btn-wrap {
+      text-align: end;
+      justify-content: space-between;
+     }
+     .category-wrap {
+        margin-top: 50px;
+    }
+    </style>
+</head>
+<body>
+<div class="body-container">
+    <!--aside-->
+    <th:block th:replace="~{fragment/aside::asideFragment}"></th:block>
+    <!--aside-->
+
+    <div class="main-container">
+        <div class="content-container">
+            <header>
+                <div class="header-title">
+                    <h2>메뉴관리 리스트 > 메뉴 상세보기</h2>
+                    <h2><i class="fa-solid fa-user-tie" style="margin-right: 5px"></i>코리아피자 관리자</h2>
+                </div>
+            </header>
+            <hr>
+            <div class="content-wrap">
+                <div class="user-list">
+                    <ul class="category-wrap" >
+                        <li>
+                            <img th:src="@{|/${tem.folderName}/${tem.savedFileName}|}" alt="피자이미지">
+                        </li>
+                        <li>
+                            <th:block th:switch="${tem.categoryCode}">
+                                <p th:case="1">카테고리 : 프리미엄 피자</p>
+                                <p th:case="2">카테고리 : 오리지널 피자</p>
+                                <p th:case="3">카테고리 : 사이드 메뉴</p>
+                                <p th:case="4">카테고리 : 음료&기타</p>
+                            </th:block>
+                        </li>
+                        <li>
+                            <p th:text="${tem.itemName}"></p>
+                        </li>
+                        <li>
+                            <p th:if="${tem.itemIntro} != null">[[${tem.itemIntro}]]</p>
+                            <p th:unless="${tem.itemIntro} != null">-</p>
+                        </li>
+                        <li>
+                            <p th:text="|${#numbers.formatInteger(tem.itemPrice, 0, 'COMMA')}원|"></p>
+                        </li>
+                    </ul>
+                    <div class="btn-wrap">
+                        <div class="list-btn2">
+                            <a href="/admin/itemList"><button>목록으로</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-center">
+            </div>
+        </div>
+</body>
+</html>

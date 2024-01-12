@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자 관리자페이지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/aside.css}">
+    <style>
+
+        /* 메인 컨데이너 스타일 시작 */
+        .main-container {
+          padding-left: 30px;
+          background-color: #f6f6f6;
+        }
+
+        .main-container .content-wrap .top-content {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
+          height: 250px;
+        }
+
+        .main-container .content-wrap .top-content ul:first-child {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+        }
+
+        .main-container ul li i {
+          margin-left: 5px;
+        }
+
+        .main-container .content-wrap .top-content ul:first-child li {
+          background-color: white;
+          width: 300px;
+          height: 100%;
+        }
+        .header-title {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom : 10px;
+        }
+        .main-container ul li div {
+          width: 100%;
+          height: 75%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .main-container .content-wrap .top-content ul:nth-child(2) {
+          width: 100%;
+          display: flex;
+        }
+
+        .main-container ul:nth-child(2) p {
+          padding-left: 5px;
+          /* background-color: #f6f6f6; */
+          /* font-weight: bold; */
+        }
+
+        .main-container ul:nth-child(2) hr {
+          border: 0;
+          border: 1px solid #eee;
+        }
+
+        .main-container .content-wrap .top-content ul:nth-child(2) li {
+          width: 100%;
+          margin-left: 20px;
+          background-color: white;
+        }
+
+        .main-container .content-wrap .top-content ul:nth-child(2) table {
+          margin-top: 40px;
+          width: 95%;
+        }
+
+        .order-list {
+          margin-top: 20px;
+          height: 300px;
+          background-color: white;
+        }
+        hr {
+          border: 1px solid #db6186;
+        }
+        .list {
+          display: flex;
+          justify-content: space-between;
+        }
+        .list button {
+          border: 0;
+          background-color: transparent;
+          cursor: pointer;
+          margin-right: 20px;
+        }
+        .list span {
+          font-weight : bold;
+        }
+        /* 주문목록 스타일 시작 */
+
+        .order-list p {
+          padding: 5px;
+        }
+        .order-list hr {
+          border: 0;
+          border: 1px solid #eee;
+        }
+        table {
+          margin: 10px auto;
+          width: 98%;
+          border-collapse: collapse;
+          text-align: center;
+        }
+        .order-list th {
+          background-color: #f6f6f6;
+        }
+
+        th,
+        td {
+          border-bottom: 2px solid #eee;
+          padding: 0 15px;
+
+        }
+        .active {
+          display: block;
+        }
+        .order {
+          text-align: center;
+          padding-top: 50px;
+        }
+        .order p {
+          font-size: 20px;
+          margin-top: 15px;
+        }
+        .greenPadding {
+      padding: 4px 10px; background-color: #e4faf3; color: #2fb888;border-radius: 5px; font-weight: 600;
+    }
+    .redPadding {
+      padding: 4px 10px; background-color: #fbeef2; color: #d13564;border-radius: 5px; font-weight: 600;
+    }
+    .bluePadding {
+        padding: 4px 10px; background-color: #e3f5ff; color: #219dd1;border-radius: 5px; font-weight: 600;
+    }
+    .user-list {
+        background-color:white;
+        margin-top :20px;
+    }
+    .user-list td {
+        padding:10px 0;
+    }
+     .user-list p {
+          padding: 5px;
+        }
+     .user-list hr {
+      border: 0;
+      border: 1px solid #eee;
+    }
+    .user-list th {
+      background-color: #f6f6f6;
+    }
+    .inquiry-list {
+        background-color:white;
+        margin-top :20px;
+    }
+    .inquiry-list td {
+        padding:10px 0;
+    }
+     .inquiry-list p {
+          padding: 5px;
+     }
+     .inquiry-list hr {
+      border: 0;
+      border: 1px solid #eee;
+    }
+    .inquiry-list th {
+      background-color: #d9edf7;
+    }
+    .yellow {
+        color: #ffc107;
+    }
+    </style>
+</head>
+
+<body>
+<div class="body-container">
+
+    <!--aside-->
+    <th:block th:replace="~{fragment/aside::asideFragment}"></th:block>
+    <!--aside-->
+
+    <div class="main-container">
+        <div class="content-container">
+            <header>
+                <div class="header-title">
+                    <h2>KOREA PIZZA ADMIN</h2>
+                    <h2><i class="fa-solid fa-user-tie" style="margin-right: 5px"></i>코리아피자 관리자</h2>
+                </div>
+            </header>
+            <hr>
+            <div class="content-wrap">
+                <div class="top-content">
+                    <ul>
+                        <li  style="background-color:  #EB5353; color: white;" >
+                            <i class="fa-regular fa-user"></i>
+                            <span>회원 수</span>
+                            <div>
+                                <h2>[[${cnt}]]명</h2>
+                            </div>
+                        </li>
+
+                        <li style="background-color: #0FABBC; color: white;">
+                            <i class="fa-solid fa-won-sign"></i>
+                            <span>총 매출</span>
+                            <div>
+                                <h2 th:if="${ordersSum} != null" th:text="|${#numbers.formatInteger(ordersSum, 0, 'COMMA')}원|"></h2>
+                                <h2 th:unless="${ordersSum} != null">0원</h2>
+                            </div>
+                        </li>
+
+                        <li style="background-color: #1EAE98; color: white;">
+                            <i class="fa-regular fa-comment"></i>
+                            <span>고객문의</span>
+                            <div>
+                                <h2>[[${askcnt}]]건</h2>
+                            </div>
+                        </li>
+
+                        <li style="background-color: #F1CA89; color: white;">
+                            <i class="fa-regular fa-comment-dots"></i>
+                            <span>고객문의 답변완료</span>
+                            <div>
+                                <h2>[[${admincnt}]]건</h2>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul>
+                        <li class="order">
+                            <img src="/images/admin_imgs/ribbon.png" alt="">
+                            <p> 현재 리뷰평점 : <span style="font-weight : bold; color : #cf152d" th:text="${#numbers.formatDecimal(reviewAvg,1,2,)}"></span>점</p>
+                        </li>
+                        <li class="order">
+                            <img src="/images/admin_imgs/pizza.png" alt="">
+                            <p> 누적 주문횟수 : <span style="font-weight : bold; color : #cf152d">[[${ordersCnt}]]</span>회</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="user-list">
+                    <div class="list">
+                        <p style="font-weight: 600;">주문목록</p>
+                        <button th:onclick="moveOrders()"><span>+더보기</span></button>
+                    </div>
+                    <hr>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th><span>주문번호</span></th>
+                            <th>아이디</th>
+                            <th>상품명</th>
+                            <th>요청사항</th>
+                            <th>가격</th>
+                            <th>주문일자</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="open" th:each="item, i : ${orders}">
+                            <td><span class="greenPadding">[[${item.id}]]</span></td>
+                            <td>[[${item.userId}]]</td>
+                            <td>[[${item.itemNameAndCount}]]</td>
+                            <td>[[${item.inquiry}]]</td>
+                            <td><span style="font-weight: 600;"  th:text="|${#numbers.formatInteger(item.totalPrice, 0, 'COMMA')}원|"></span></td>
+
+                            <td>[[${item.orderDate}]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <div class="user-list">
+                    <div class="list">
+                        <p style="font-weight: 600;">상품목록</p>
+                        <button th:onclick="moveItemList()"><span>+더보기</span></button>
+                    </div>
+                    <hr>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>카테고리</th>
+                                <th>메뉴이름</th>
+                                <th>인트로</th>
+                                <th>가격</th>
+                                <th>등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="open" th:each="item, i : ${item}">
+                                <td th:if="${item.categoryCode} == '1'"><span style="padding: 4px 10px; background-color: #fbeef2; color: #d13564;border-radius: 5px; font-weight: 600;">프리미엄 피자</span></td>
+                                <td th:if="${item.categoryCode} == '2'"><span style="padding: 4px 10px; background-color: #e3f5ff; color: #219dd1;border-radius: 5px; font-weight: 600;">오리지널 피자</span></td>
+                                <td th:if="${item.categoryCode} == '3'"><span style="padding: 4px 10px; background-color: #e4faf3; color: #2fb888;border-radius: 5px; font-weight: 600;">사이드 메뉴</span></td>
+                                <td th:if="${item.categoryCode} == '4'"><span style="padding: 4px 10px; background-color: #eff0f1; color: #6b6e70;border-radius: 5px; font-weight: 600;">음료&기타</span></td>
+                                <td>[[${item.itemName}]]</td>
+                                <td style="text-align : start;">[[${item.itemIntro}]]</td>
+                                <td style="font-weight: 600;"><span style="font-weight: 600;" th:text="|${#numbers.formatInteger(item.itemPrice, 0, 'COMMA')}원|"></span></td>
+                                <td>[[${item.regdate}]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="user-list">
+                    <div class="list">
+                        <p style="font-weight: 600;">회원목록</p>
+                        <button th:onclick="moveUserList()"><span>+더보기</span></button>
+                    </div>
+                    <hr>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>아이디</th>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>가입일</th>
+                            <th>회원상태</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user, u : ${user}">
+                            <td><span class="bluePadding">[[${user.userId}]]</span></td>
+                            <td>[[${user.userName}]]</td>
+                            <td>[[${user.userEmail}]]</td>
+                            <td>[[${user.userRegDate}]]</td>
+                            <td th:if="${user.userSt} == '00'" style="color: green"><span class="greenPadding" >활성화</span></td>
+                            <td th:unless="${user.userSt} == '00'" style="color: red"><span class="redPadding ">탈퇴</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="user-list">
+                    <div class="list">
+                        <p style="font-weight: 600;">문의목록</p>
+                        <button th:onclick="moveAskList()"><span>+더보기</span></button>
+                    </div>
+                    <hr>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>답변문의유형</th>
+                            <th>이름</th>
+                            <th>아이디</th>
+                            <th>제목</th>
+                            <th>등록일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="ask, a : ${ask}">
+                            <td th:if="${ask.optionCode} == '1'"><span style="padding: 4px 10px; background-color: #fbeef2; color: #d13564;border-radius: 5px; font-weight: 600;">회원문의</span></td>
+                            <td th:if="${ask.optionCode} == '2'"><span style="padding: 4px 10px; background-color: #e3f5ff; color: #219dd1;border-radius: 5px; font-weight: 600;">주문문의</span></td>
+                            <td th:if="${ask.optionCode} == '3'"><span style="padding: 4px 10px; background-color: #e4faf3; color: #2fb888;border-radius: 5px; font-weight: 600;">기타문의</span></td>
+                            <td>[[${ask.userName}]]</td>
+                            <td>[[${ask.userId}]]</td>
+                            <td>
+                                <th:block th:if="${ask.depth > 1}">
+                                    <!--    depth = int타입 그러므로 #numbers를 사용      -->
+                                    <th:block th:each="seq : ${#numbers.sequence(2, ask.depth ) }">
+                                        &nbsp; <span style="padding: 3px 5px; background-color: #fbeef2; color: #d13564;border-radius: 5px; font-weight: 600;">[답변완료]</span>
+                                    </th:block>
+                                </th:block>
+                                [[${ask.subject}]]
+                            </td>
+                            <td>[[${ask.regdate}]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="user-list">
+                    <div class="list">
+                        <p style="font-weight: 600;">리뷰목록</p>
+                        <button><span th:onclick="moveReviews()">+더보기</span></button>
+                    </div>
+                    <hr>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>주문번호</th>
+                            <th>별점</th>
+                            <th>아이디</th>
+                            <th>이름</th>
+                            <th>리뷰 내용</th>
+                            <th>리뷰 등록일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="open" th:each="review, r : ${review}">
+                            <td><span class="greenPadding">[[${review.id}]]</span></td>
+                            <td th:if="${review.score} == '1'"><span class="yellow">★</span></td>
+                            <td th:if="${review.score} == '2'"><span class="yellow">★★</span></td>
+                            <td th:if="${review.score} == '3'"><span class="yellow">★★★</span></td>
+                            <td th:if="${review.score} == '4'"><span class="yellow">★★★★</span></td>
+                            <td th:if="${review.score} == '5'"><span class="yellow">★★★★★</span></td>
+                            <td><span>[[${review.userId}]]</span></td>
+                            <td><span>[[${review.userName}]]</span></td>
+                            <td><span>[[${review.reviewcontent}]]</span></td>
+                            <td><span>[[${review.regdate}]]</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function moveItemList(){
+        location.href="/admin/itemList";
+    }
+     function moveUserList(){
+        location.href="/admin/userAdminPage";
+    }
+     function moveAskList(){
+        location.href="/admin/ask";
+    }
+     function moveitem(){
+        location.href="/admin/itemList";
+    }
+     function moveOrders(){
+        location.href="/admin/orderList";
+    }
+
+    function moveReviews(){
+        location.href="/admin/reviewList";
+    }
+</script>
+</body>
+
+</html>

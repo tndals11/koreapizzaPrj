@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>aside layout</title>
+</head>
+<body>
+<!-- aside -->
+<div th:fragment="asideFragment">
+    <aside class="side-container">
+        <div class="img-wrap">
+            <div class="img-box">
+                <img src="/images/admin_imgs/adminlogo.png" alt="">
+            </div>
+            <div class="img-content">
+                <p>KOREA PIZZA ADMIN</p>
+            </div>
+        </div>
+        <div id="menu">
+            <ul>
+                <li><a href="/admin/adminMainPage"><i class="fa-solid fa-house"></i>홈으로</a></li>
+                <li><a href="/admin/orderList"><i class="fa-solid fa-cart-shopping"></i>주문관리</a></li>
+                <li><a href="/admin/itemList"><i class="fa-solid fa-gift"></i>메뉴관리</a></li>
+                <li><a href="/admin/userAdminPage"><i class="fa-solid fa-user"></i>회원관리</a></li>
+                <li class="open">
+                    <a href="#"><i class="fa-solid fa-list-ul"></i>게시판관리</a>
+                    <ul class="sub-menu">
+                        <li><a href="/admin/reviewList">리뷰게시판</a></li>
+                        <li><a href="/admin/ask">문의게시판</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="go-to"><a href="">
+            <h4><a th:href="@{/logout}" style="color:white;"><i class="fa-solid fa-right-from-bracket"></i>로그아웃</a></h4>
+        </a></div>
+    </aside>
+</div>
+<script>
+</script>
+</body>
+</html>

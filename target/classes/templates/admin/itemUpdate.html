@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자 관리자페이지</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/aside.css}">
+    <style>
+        .body-container {
+        margin: 0;
+        padding: 0;
+        }
+
+        .main-container {
+        margin: auto;
+        margin-left: 160px;
+        max-width: 100%;
+        }
+
+        .content-container {
+        padding: 20px;
+        width: 100%;
+        }
+
+        /* 메인 컨테이너 스타일 시작 */
+
+        .main-container {
+         height: 1000px;
+         padding-left: 30px;
+        }
+
+        .content-wrap {
+         background-color: white;
+         padding-bottom: 50px;
+         margin-bottom: 40px;
+         margin-top:10px;
+        }
+
+        hr {
+          border: 0;
+          border:1px solid #db6186;
+        }
+
+         hr {
+            border: 0.5px solid #cf152d;
+          }
+          .header-title {
+            display:flex;
+            justify-content: space-between;
+          }
+
+        .add-list {
+        width: 100%;
+        padding: 0 10px;
+        border-radius: 3px;
+        }
+
+        .add-list> p {
+         margin-top: 15px;
+         font-size: 20px;
+         padding: 10px;
+        }
+
+        label {
+        margin-bottom: 3px;
+        }
+
+        .input {
+        padding:0.5rem 0.75rem;
+        font-size: 14px;
+        color:#212529;
+        background-color:#fff;
+        border:1px solid #ced4da;
+        display:block;
+        border-radius: 3px;
+        outline:0;
+        }
+
+        .width-100 {
+        width:100%;
+        }
+
+        .width-15 {
+        width:15%;
+        }
+
+        .height-400 {
+        height:400px;
+        }
+
+        form ul li {
+        margin-top:20px;
+        margin-bottom:5px;
+        }
+
+        .input:focus {
+        border:1px solid #86b7fe;
+        }
+
+        .btn2 {
+        padding: 8px 12px;
+        color:#fff;
+        border-radius: 3px;
+        font-size: 14px;
+        cursor:pointer;
+        border:0;
+        }
+
+        .blue {
+        background-color: #4169e1;
+        }
+
+        .red {
+        background-color: #cf152d;
+        }
+
+        .noto {
+        font-family: 'Noto Sans KR', sans-serif;
+        }
+        .header-title h2{
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        textarea {
+           width: 100%;
+           height: 6.25em;
+           border: none;
+           resize: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="body-container">
+    <!--aside-->
+    <th:block th:replace="~{fragment/aside::asideFragment}"></th:block>
+    <!--aside-->
+
+    <div class="main-container">
+        <div class="content-container">
+            <header>
+                <div class="header-title">
+                    <h2>메뉴관리 리스트 > 메뉴 수정</h2>
+                    <h2><i class="fa-solid fa-user-tie" style="margin-right: 5px"></i>코리아피자 관리자</h2>
+                </div>
+            </header>
+            <hr>
+            <div class="content-wrap">
+                <div class="add-list">
+                    <form onsubmit="return frmCheck()" action="/admin/itemUpdate" method="post" enctype="multipart/form-data">
+                        <ul>
+                            <li>
+                                <label>카테고리</label>
+                                <select name="categoryCode" id="category" class="input width-15 noto"></select>
+                            </li>
+                            <li>
+                                <label>이름</label>
+                                <input type="text" name="itemName" class="input width-15 noto" th:value="${item.itemName}" />
+                            </li>
+                            <li>
+                                <label>가격</label>
+                                <input type="text" name="itemPrice" class="input width-15 noto" th:value="${item.itemPrice}"/>
+                            </li>
+                            <li>
+                                <label>설명</label>
+                                <textarea name="itemIntro" class="input width-100 height-200 noto" >[[${item.itemIntro}]]</textarea>
+                            </li>
+                            <li>
+                                <img th:src="@{|/${item.folderName}/${item.savedFileName}|}" alt="피자이미지">
+
+                            </li>
+                            <li>
+                                <p>메뉴 사진이름 : [[${item.orgName}]]</p>
+                            </li>
+                            <li>
+                                <label>메뉴사진</label>
+                                <input type="file" name="file" class="input width-100" multiple/>
+                            </li>
+                            <li>
+                                <input type="submit" value="수정하기" class="btn2 red" >
+                                <input type="reset" value="목록" class="btn2 blue" onclick="move()">
+                            </li>
+                        </ul>
+                        <input type="hidden" name="itemId" th:value="${item.itemId}">
+                        <input type="hidden" name="orgName" th:value="${item.orgName}">
+                        <input type="hidden" name="savedFileName" th:value="${item.savedFileName}">
+                        <input type="hidden" name="savedFilePathName" th:value="${item.savedFilePathName}">
+                        <input type="hidden" name="savedFileSize" th:value="${item.savedFileSize}">
+                        <input type="hidden" name="folderName" th:value="${item.folderName}">
+                        <input type="hidden" name="ext" th:value="${item.ext}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let categoryCode = $("#category").val();
+    let itemName = document.querySelector("input[name=itemName]");
+    let itemPrice = document.querySelector("input[name=itemPrice]");
+    let itemIntro = document.querySelector("textarea[name=itemIntro]");
+
+ $(function() {
+        $.ajax({
+            type: "post",
+            url: "/admin/category",
+            dataType: "json",
+            success: function(res) {
+                let output = "";
+                res.category.forEach( (i) => {
+                    output += `<option value="${i.categoryCode}">${i.categoryName}</option>`;
+                });
+                document.querySelector("#category").innerHTML = output;
+            }
+        });
+    });
+
+
+window.onload = function() {
+    document.querySelector("input[name=categoryCode]").focus();
+}
+
+function frmCheck() {
+
+    if(name.value == "") {
+        alert("상품이름을 입력하십시오.");
+        name.focus();
+        return false;
+    }
+
+    if(intro.value == "") {
+        alert("상품설명을 입력하십시오.");
+        intro.focus();
+        return false;
+    }
+
+    if(price.value == "") {
+        alert("상품설명을 입력하십시오.");
+        price.focus();
+        return false;
+    }
+}
+
+function move() {
+    location.href = "/admin/itemList";
+}
+
+
+</script>
+
+</body>
+
+</html>

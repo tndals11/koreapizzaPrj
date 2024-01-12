@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자 관리자페이지</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/aside.css}">
+    <style>
+        .body-container {
+        margin: 0;
+        padding: 0;
+        }
+
+        .main-container {
+        margin: auto;
+        margin-left: 160px;
+        max-width: 100%;
+        }
+
+        .content-container {
+        padding: 20px;
+        width: 100%;
+        }
+
+        /* 메인 컨테이너 스타일 시작 */
+
+        .main-container {
+         height: 1000px;
+         padding-left: 30px;
+        }
+
+        .content-wrap {
+         background-color: white;
+         padding-bottom: 50px;
+         margin-bottom: 40px;
+         margin-top:10px;
+        }
+
+        .content-wrap hr {
+         border: 0;
+        }
+
+        hr {
+            border: 0.5px solid #cf152d;
+          }
+      .header-title {
+            display:flex;
+            justify-content: space-between;
+      }
+
+        .add-list {
+        width: 100%;
+        padding: 0 10px;
+        border-radius: 3px;
+        }
+
+        .add-list> p {
+         margin-top: 15px;
+         font-size: 20px;
+         padding: 10px;
+        }
+
+        label {
+        margin-bottom: 3px;
+        }
+
+        .input {
+        padding:0.5rem 0.75rem;
+        font-size: 14px;
+        color:#212529;
+        background-color:#fff;
+        border:1px solid #ced4da;
+        display:block;
+        border-radius: 3px;
+        outline:0;
+        }
+
+        .width-100 {
+        width:100%;
+        }
+
+        .width-15 {
+        width:15%;
+        }
+
+        .height-400 {
+        height:400px;
+        }
+
+        form ul li {
+        margin-top:20px;
+        margin-bottom:5px;
+        }
+
+        .input:focus {
+        border:1px solid #86b7fe;
+        }
+
+        .btn2 {
+        padding: 8px 12px;
+        color:#fff;
+        border-radius: 3px;
+        font-size: 14px;
+        cursor:pointer;
+        border:0;
+        }
+
+        .blue {
+        background-color: #4169e1;
+        }
+
+        .red {
+        background-color: #cf152d;
+        }
+
+        .noto {
+        font-family: 'Noto Sans KR', sans-serif;
+        }
+        .header-title h2{
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        textarea {
+           width: 100%;
+           height: 6.25em;
+           border: none;
+           resize: none;
+        }
+    </style>
+</head>
+<body>
+<div class="body-container">
+    <!--aside-->
+    <th:block th:replace="~{fragment/aside::asideFragment}"></th:block>
+    <!--aside-->
+
+    <div class="main-container">
+        <div class="content-container">
+            <header>
+                <div class="header-title">
+                    <h2>1:1 문의 페이지 > 1:1 문의 페이지 답변</h2>
+                    <h2><i class="fa-solid fa-user-tie" style="margin-right: 5px"></i>코리아피자 관리자</h2>
+                </div>
+            </header>
+            <hr>
+            <div class="content-wrap">
+                <div class="add-list">
+                    <hr>
+                    <form onsubmit="return frmCheck()" action="/admin/replyAsk" method="post" enctype="multipart/form-data">
+                        <ul>
+                            <li>
+                                <label>작성자</label>
+                                <input type="text" name="writer" class="input width-15 noto" th:value="[관리자]" readonly/>
+                            </li>
+                            <li>
+                                <label>제목</label>
+                                <input type="text" name="subject" class="input width-15 noto" th:value="|[원본제목] : ${reply.subject}|"/>
+                            </li>
+                            <li>
+                                <label>내용</label>
+                                <textarea name="content" class="input width-100 height-300 noto">[원본글] : [[${reply.content}]]</textarea>
+                            </li>
+                            <li>
+                                <label>메뉴사진</label>
+                                <input type="file" name="file" class="input width-100" multiple/>
+                            </li>
+                            <li>
+                                <input type="submit" value="답글달기" class="btn2 red" >
+                                <input type="reset" value="목록" class="btn2 blue" onclick="move()">
+                            </li>
+                        </ul>
+                        <input type="hidden" name="id" th:value="${reply.id}">
+                        <input type="hidden" name="optionCode" th:value="${reply.optionCode}">
+                        <input type="hidden" name="userNum" th:value="${reply.userNum}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let writer = document.querySelector("input[name=writer]");
+    let subject = document.querySelector("input[name=subject]");
+    let content = document.querySelector("textarea[name=content]");
+    let optionCode = $("#options").val();
+
+    function frmCheck() {
+        if (subject.value == "") {
+            alert("제목을 입력하세요");
+        }
+
+        if (content.value == "") {
+            alert("내용을 입력하세요");
+        }
+
+    }
+
+     $(function () {
+
+      $.ajax({
+          type: "post",
+          url: "/user/options",
+          dataType: "json",
+          success: function(res) {
+              let output = "";
+              res.options.forEach( (o) => {
+                  output += `<option value="${o.optionCode}">${o.optionName}</option>`;
+              });
+              document.querySelector("#options").innerHTML = output;
+          }
+      });
+
+     });
+
+    function move() {
+        location.href = "/admin/ask";
+    }
+
+
+</script>
+
+</body>
+
+</html>

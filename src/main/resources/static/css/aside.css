@@ -1,0 +1,127 @@
+ @charset 'utf-8';
+ @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+ .side-container {
+      height: 100%;
+      width: 200px;
+      position: fixed;
+      z-index: 1;
+      background-color: #212529;
+      overflow-x: hidden;
+      padding-top: 10px;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .img-wrap {
+      padding-bottom: 10px;
+    }
+
+    .img-box {
+      width: 150px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background-color: white;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .img-wrap .img-box img {
+      width: 100%;
+      padding: 5px;
+    }
+
+    .img-wrap p {
+      color: white;
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .body-container {
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    .main-container {
+      margin: auto;
+      margin-left: 160px;
+      max-width: 100%;
+    }
+
+    .content-container {
+      padding: 20px;
+      width: 100%;
+    }
+
+    /* side 메뉴바 스타일 */
+    #menu {
+      line-height: 50px;
+      margin: 0 auto;
+      /* margin-top: 5px; */
+    }
+
+    #menu>ul>li:not(.open):hover {
+      cursor: pointer;
+      background-color: #cf152d;
+      border-radius: 3px;
+    }
+
+    .open a {
+      display: block;
+    }
+
+    .open>a:hover {
+      position: relative;
+      cursor: pointer;
+      background-color: #cf152d;
+      border-radius: 3px;
+    }
+
+    .sub-menu {
+      display: none;
+      position: absolute;
+      overflow: auto;
+    }
+
+    .open:hover .sub-menu {
+      display: block;
+    }
+
+    .sub-menu a{
+      display: block;
+      margin: 0 63px;
+    }
+
+    .sub-menu li:hover {
+      background-color: #cf152d;
+      border-radius: 3px;
+
+    }
+
+    #menu>ul li a {
+      color: white;
+    }
+
+    #menu ul li i {
+      margin-left: 35px;
+      margin-right: 20px;
+    }
+
+    .go-to h4>a {
+      color: white;
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+    }
+
+    .go-to h4>a:hover {
+      color: #ccc;
+    }
+
+    .go-to h4 i {
+      margin-right: 5px;
+    }

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/height.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <style>
+        body {
+               display: flex;
+               flex-direction: column;
+               min-height: 100vh;
+               margin: 0;
+           }
+
+           main {
+               flex: 1;
+           }
+
+         /* main css 영역 */
+         .container {
+           width: 100%;
+           padding-top: 200px;
+           padding-bottom: 50px;
+         }
+         .content-wrap {
+           width: 1280px;
+           height: 200px;
+           display: flex;
+           margin: 0 auto;
+           border: 1px solid #aaa;
+         }
+         .content1 {
+           display: flex;
+           width: 50%;
+           height: 200px;
+           align-items: center;
+         }
+         .content1 ul {
+           width: 100%;
+           display: flex;
+           margin-left: 130px;
+           border-right: 2px solid #aaa;
+         }
+         .content1 ul li p {
+           font-size: 24px;
+           margin-top: 30px;
+           margin-left: 30px;
+         }
+         .img-box {
+           width: 128px;
+           height: 128px;
+           border-radius: 50%;
+           border: 1px solid black;
+         }
+         .profile {
+           width: 128px;
+           height: 128px;
+           object-fit: cover;
+           background-image: url(./images/review/admin.png);
+           border-radius: 150px; /* 레이어 반크기만큼 반경을 잡기*/
+           background-size: cover;
+         }
+         .content2 {
+           display: flex;
+           width: 50%;
+           height: 200px;
+         }
+         .content2 ul {
+           width: 100%;
+           height: 100%;
+           display: flex;
+           justify-content: space-between;
+         }
+         .item {
+           padding:50px 70px;
+         }
+         .item p {
+           font-size: 17px;
+           font-weight: 600;
+           text-align: center;
+         }
+         .content3 {
+           width: 1280px;
+           margin: 0 auto;
+           border: 1px solid #aaa;
+         }
+         .list-title {
+           text-align: center;
+           margin-top: 50px;
+           margin-bottom: 50px;
+         }
+         .list-content1 {
+           width: 1100px;
+           height: 200px;
+           margin-left: 120px;
+           box-shadow:0 5px 20px rgba(0, 0, 0, 0.2);
+           border-bottom-right-radius: 50px;
+           margin-bottom: 50px;
+         }
+         .list-box {
+           width: 100%;
+           height: 100px;
+           display: flex;
+           padding: 15px;
+         }
+         .list-img {
+           width: 64px;
+           height: 64px;
+           border-radius: 50%;
+           border: 1px solid black;
+         }
+         .list-content1 ul p {
+           font-size: 18px;
+           margin-left: 10px;
+           color: #ffd400;
+         }
+         .name-regdate {
+           font-size: 15px;
+           margin-top: 14px;
+           margin-left: 10px;
+           color: black;
+           width: 230px;
+         }
+         .mid {
+           margin-left: 5px;
+           margin-right: 5px;
+           color: #aaa;
+         }
+         .list-num {
+           display: flex;
+           font-size: 20px;
+           margin-left: 610px;
+           align-items: center;
+           padding-right: 8px;
+         }
+         .list-box2 {
+          padding-left: 20px;
+          height: 50px;
+         }
+
+    </style>
+</head>
+<body>
+<!--header-->
+<th:block th:replace="~{fragment/afterLoginHeader::afterHeaderFragment}"></th:block>
+<!--header-->
+<!-- main 영역 -->
+<main>
+    <th:block>
+    <div class="container" >
+        <div class="content-wrap">
+            <div class="content1">
+                <ul>
+                    <li class="img-box">
+                        <img class="profile" src="/images/review_imgs/admin.png" alt="">
+                    </li>
+                    <li>
+                        <p><strong>[[${userName}]]</strong>님<br>소중한 리뷰가 도움이 됩니다</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="content2">
+                <ul>
+                    <li class="item">
+                        <p><img src="/images/review_imgs/ribbon.png" alt=""></p>
+                        <p>리뷰횟수</p>
+                        <p>[[${reviewCount}]]회</p>
+                    </li>
+                    <li class="item">
+                        <p><img src="/images/review_imgs/to-do-list.png" alt=""></p>
+                        <p>주문횟수</p>
+                        <p>[[${orderCount}]]회</p>
+                    </li>
+                    <li class="item">
+                        <p><img src="/images/review_imgs/receipt.png" alt=""></p>
+                        <p>이용금액</p>
+                        <p><span th:text="|${#numbers.formatInteger(orderTotalPrice, 0, 'COMMA')}원|"></span></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content3">
+            <div class="list-title">
+                <h1>리뷰내역</h1>
+            </div>
+            <div th:if="${review.score != 0}" class="list-content1" th:each="review, i : ${review}">
+                <form action="#" method="post">
+                    <ul>
+                        <li>
+                            <div class="list-box">
+                                <div class="list-img" style="overflow: hidden;">
+                                    <img src="/images/review_imgs/admin2.png" alt="" class="img-profile">
+                                </div>
+                                <ul>
+                                    <li style="display: flex;">
+                                        <p th:if="${review.score} == 1">★</p>
+                                        <p th:if="${review.score} == 2">★★</p>
+                                        <p th:if="${review.score} == 3">★★★</p>
+                                        <p th:if="${review.score} == 4">★★★★</p>
+                                        <p th:if="${review.score} == 5">★★★★★</p>
+                                    </li>
+                                    <li class="name-regdate">
+                                        <span>[[${review.userId}]]</span><span class="mid">|</span><span>[[${review.regdate}]]</span>
+                                    </li>
+                                </ul>
+                                <div class="list-num">
+                                    <span>[[${review.id}]]</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="list-box2">
+                                <span>[[${review.reviewcontent}]]</span>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</th:block>
+<!-- footer -->
+<th:block th:replace="~{fragment/footer::footerFragment}"></th:block>
+<!-- footer -->
+
+</body>
+</html>

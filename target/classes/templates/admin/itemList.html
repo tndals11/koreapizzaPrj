@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자 관리자페이지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/aside.css}">
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <style>
+        /* 메인 컨테이너 스타일 시작 */
+        .main-container {
+          height: 1000px;
+          padding-left: 30px;
+<!--          background-color: #f6f6f6;-->
+          background-color: white;
+        }
+        .content-wrap {
+          padding-bottom: 50px;
+          margin-bottom: 40px;
+          background-color: white;
+        }
+        hr {
+          border: 0;
+          border:1px solid #db6186;
+        }
+         .header-title h2 {
+              font-size: 22px;
+              margin-bottom: 10px;
+          }
+         .header-title {
+            display:flex;
+            justify-content: space-between;
+         }
+        .user-list p {
+          margin-top: 15px;
+          margin-left: 20px;
+          font-size: 16px;
+        }
+        .content-wrap select {
+          margin-top: 15px;
+          margin-left: 18px;
+        }
+        .top-option {
+          display: flex;
+          justify-content: space-between;
+        }
+        .content-wrap .search-wrap {
+          margin-top: 12px;
+          margin-right: 18px;
+        }
+        .user-list table {
+          margin: 10px auto;
+          width: 98%;
+          border-collapse: collapse;
+          text-align: center;
+        }
+        .user-list th {
+         background-color: #f7f7f7;
+         border-bottom: 1px solid #eee;
+        }
+        form {
+           margin-right: 17px;
+        }
+    th {
+      padding: 15px 30px;
+    }
+    td {
+      padding: 10px 20px;
+      border-bottom: 1px solid #eee;
+    }
+    tbody tr td:nth-child(3) {
+         text-align: start;
+    }
+
+    .blue {
+      color: royalblue;
+      padding: 5px 15px;
+      border: 0;
+      background-color: transparent;
+      border-bottom: 1px solid royalblue;
+    }
+    .tomato {
+      color: #cf152d;
+      padding: 5px 15px;
+      border: 0;
+      background-color: transparent;
+      border-bottom: 1px solid #cf152d;
+    }
+    .blueviolet {
+      color: blueviolet;
+      padding: 5px 15px;
+      border: 0;
+      background-color: transparent;
+      border-bottom: 1px solid blueviolet;
+    }
+    .black {
+        background-color: black;
+        color: white;
+    }
+    .open button {
+      font-family: 'Noto Sans KR', sans-serif;
+      cursor: pointer;
+    }
+     .user-btn {
+      text-align: end;
+    }
+    .user-btn button {
+      padding: 10px 20px;
+      border: 0;
+      background-color: tomato;
+      margin-right: 18px;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    .bottom-center { text-align: center; }
+    .list-btn {
+      text-align: end;
+      margin-right: 18px;
+    }
+    .list-btn1 button {
+      border: 0;
+      padding: 8px 15px;
+      background-color: #118cfd;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 20px;
+      font-weight: 700;
+    }
+    .list-btn2 button {
+      border: 0;
+      padding: 8px 15px;
+      background-color: #c71b29;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 20px;
+   }
+    .search-btn {
+      border: 1px solid #767676;
+      background-color: transparent;
+      padding: 1px 5px;
+      cursor: pointer;
+    }
+    .btn-wrap {
+     display: flex;
+     justify-content: space-between;
+    }
+    .download-style:hover {
+        opacity: 0.4;
+    }
+    .count {
+        color: red;
+    }
+    .search-style input[type="submit"]{
+        background-color: black;
+        color: white;
+        border: 0px;
+        padding: 7px 8px;
+        line-height: 16px;
+    }
+    .search-style input[type="text"]{
+        border: 1px solid #c7c7c7;
+        padding: 7px 8px;
+    }
+   .pl{
+        width: 150px;
+        border: 1px solid #c7c7c7;
+        box-sizing: border-box;
+        padding: 3.5px 8px;
+        font-family: 'Noto Sans KR', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
+    }
+    .pl:focus {
+        outline: 1px solid royalblue;
+    }
+    .bold {
+      font-weight: 700;
+    }
+
+    </style>
+</head>
+<body>
+<div class="body-container">
+    <!--aside-->
+    <th:block th:replace="~{fragment/aside::asideFragment}"></th:block>
+    <!--aside-->
+
+    <div class="main-container">
+        <div class="content-container">
+            <header>
+                <div class="header-title">
+                    <h2>메뉴관리 리스트</h2>
+                    <h2><i class="fa-solid fa-user-tie" style="margin-right: 5px"></i>코리아피자 관리자</h2>
+                </div>
+            </header>
+            <hr>
+            <div class="content-wrap">
+                <div class="user-list">
+                    <div class="top-option">
+                        <div >
+                            <p>등록된 메뉴 : <span class="count">[[${cnt}]]</span>개</p>
+                        </div>
+                        <div class="search-style">
+                            <form method="get" action="/admin/itemList" onsubmit="return searchList()">
+                                <select name="searchType" id="searchType" class="pl">
+                                    <option value="">선택</option>
+                                    <option value="category_code" >카테고리 번호</option>
+                                    <option value="item_name">아이템 이름</option>
+                                    <option value="item_price">아이템 가격</option>
+                                    <option value="item_intro">아이템 코멘트</option>
+                                </select>
+                                <input type="text" name="words" placeholder="검색어 입력">
+                                <input type="submit" value="검색" class="search-btn">
+                            </form>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>카테고리</th>
+                            <th>메뉴이름</th>
+                            <th>인트로</th>
+                            <th>가격</th>
+                            <th>등록일</th>
+                            <th>사진</th>
+                            <th>비고</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="open" th:each="item, i : ${item}">
+                            <td th:if="${item.categoryCode} == '1'"><span style="padding: 4px 10px; background-color: #fbeef2; color: #d13564;border-radius: 5px; font-weight: 600;">프리미엄 피자</span></td>
+                            <td th:if="${item.categoryCode} == '2'"><span style="padding: 4px 10px; background-color: #e3f5ff; color: #219dd1;border-radius: 5px; font-weight: 600;">오리지널 피자</span></td>
+                            <td th:if="${item.categoryCode} == '3'"><span style="padding: 4px 10px; background-color: #e4faf3; color: #2fb888;border-radius: 5px; font-weight: 600;">사이드 메뉴</span></td>
+                            <td th:if="${item.categoryCode} == '4'"><span style="padding: 4px 10px; background-color: #eff0f1; color: #6b6e70;border-radius: 5px; font-weight: 600;">음료&기타</span></td>
+                            <td>[[${item.itemName}]]</td>
+                            <td>[[${item.itemIntro}]]</td>
+                            <td class="bold" ><span style="font-weight: 600;" th:text="|${#numbers.formatInteger(item.itemPrice, 0, 'COMMA')}원|"></span></td>
+                            <td>[[${item.regdate}]]</td>
+                            <td>
+                                <th:block th:if="${not #strings.isEmpty(item.orgName)}">
+                                    <a class="download-style" th:href="@{/download?(filename=${item.savedFilePathName})}"><i class="fa-regular fa-image"></i></a>
+                                </th:block>
+                            </td>
+                            <td>
+                                <button class="blue" th:onclick="itemView([[${item.itemName}]])">보기</button>
+                                <button class="blueviolet" th:onclick="itemUpdate([[${item.itemId}]])">수정</button>
+                                <button class="tomato" th:onclick="itemDelete([[${item.itemName}]])">삭제</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn-wrap">
+                        <div class="list-btn1" >
+                            <a href="/admin/addItem"><button>메뉴등록</button></a>
+                        </div>
+                        <div class="list-btn2">
+                            <a href="/admin/itemList"><button>목록으로</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-center">
+                    <a href="#" th:if="${page.page <= 1}"></a>
+                    <a th:href="@{/admin/itemList?(page=${page.page-1})}" th:unless="${page.page <= 1}">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+                    <!-- page number -->
+                    <!-- #numbers.sequence() 숫자를 순차적으로 생성하고 +1씩 출력-->
+                    <!-- i => 페이지번호(id) -->
+                    <a th:each="i : ${ #numbers.sequence(page.startPage, page.endPage, 1) }" th:href="@{/admin/itemList?(page=${i})}">
+                        <th:block th:if="${page.page eq i}">
+                        <span style="color:#f00; ">
+                            <strong>[[${i}]]</strong>
+                        </span>
+                        </th:block>
+                        <th:block th:unless="${page.page eq i}">
+                        <span>
+                            [[${i}]]
+                        </span>
+                        </th:block>
+                    </a>
+                    <a href="#" th:if="${page.page >= page.totalPage}" ></a>
+
+                    <a th:href="@{/admin/itemList?(page=${page.page + 1})}" th:unless="${page.page >= page.totalPage}">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                    <!----------------------------------------------------------------------------------------------------->
+            </div>
+        </div>
+    <script>
+        function itemView(itemName) {
+            location.href='/admin/itemView?itemName='+itemName;
+        }
+
+        function itemDelete(itemName) {
+                if(confirm(itemName + ' 메뉴를 삭제하시겠습니까?')) {
+                 location.href='/admin/itemDelete?itemName='+itemName;
+                }
+        }
+
+        function itemUpdate(itemId) {
+            location.href='/admin/itemUpdate?itemId='+itemId;
+        }
+
+        function move() {
+            location.href = "/admin/itemList";
+        }
+
+          function searchList() {
+            let searchType = document.querySelector("#searchType");
+            let words = document.querySelector("input[name=words]");
+
+        if( searchType.options[searchType.selectedIndex].value == "" ) {
+            alert("검색 타입을 선택하세요");
+            searchType.focus();
+            return false;
+        }
+
+        if( words.value == "" ) {
+            alert("검색어를 입력하세요");
+            words.focus();
+            return false;
+        }
+}
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자 관리자페이지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/aside.css}">
+    <style>
+
+         /* 메인 컨테이너 스타일 시작 */
+
+         .main-container {
+           height: 1000px;
+           padding-left: 30px;
+           background-color: white;
+         }
+         .content-wrap {
+           background-color: white;
+           padding-bottom: 50px;
+           margin-bottom: 40px;
+         }
+         hr {
+          border: 0;
+          border:1px solid #db6186;
+        }
+          .header-title {
+                display:flex;
+                justify-content: space-between;
+          }
+          .header-title h2 {
+               font-size: 22px;
+               margin-bottom: 10px;
+           }
+         .user-list p {
+           margin-top: 15px;
+           margin-left: 20px;
+           font-size: 16px;
+         }
+
+         .content-wrap select {
+           margin-top: 15px;
+           margin-left: 18px;
+         }
+
+         .top-option {
+           display: flex;
+           justify-content: space-between;
+         }
+
+         .content-wrap .search-wrap {
+           /* margin-right: 50px; */
+           margin-top: 15px;
+           margin-right: 18px;
+         }
+
+     .user-list table {
+       margin: 10px auto;
+       width: 98%;
+       border-collapse: collapse;
+       text-align: center;
+     }
+     .user-list th {
+
+     }
+     form {
+        margin-right: 17px;
+     }
+    th {
+      padding: 15px 30px;
+      border-bottom: 1px solid #eee;
+      background-color:#f7f7f7;
+    }
+    td {
+      padding: 10px 20px;
+      border-bottom: 1px solid #eee;
+    }
+      .blue {
+      color: royalblue;
+      padding: 5px 15px;
+      border: 0;
+      background-color: transparent;
+      border-bottom: 1px solid royalblue;
+    }
+       .tomato {
+      color: #cf152d;
+      padding: 5px 15px;
+      border: 0;
+      background-color: transparent;
+      border-bottom: 1px solid #cf152d;
+    }
+     .black {
+         background-color: black;
+         color: white;
+     }
+     .open button {
+       font-family: 'Noto Sans KR', sans-serif;
+       cursor: pointer;
+     }
+      .user-btn {
+       text-align: end;
+     }
+     .user-btn button {
+       padding: 10px 20px;
+       border: 0;
+       background-color: tomato;
+       margin-right: 18px;
+       border-radius: 5px;
+       color: white;
+       cursor: pointer;
+     }
+     .bottom-center { text-align: center; }
+     .list-btn {
+       text-align: end;
+       margin-right: 18px;
+     }
+     .list-btn button {
+       border: 0;
+       padding: 8px 15px;
+       background-color: #c71b29;
+       color: white;
+       border-radius: 5px;
+        cursor: pointer;
+     }
+       .search-btn {
+       border: 1px solid #767676;
+       background-color: transparent;
+       padding: 1px 5px;
+       cursor: pointer;
+     }
+         .search-style input[type="submit"]{
+        background-color: black;
+        color: white;
+        border: 0px;
+        padding: 7px 8px;
+        line-height: 16px;
+    }
+    .search-style input[type="text"]{
+        border: 1px solid #c7c7c7;
+        padding: 7px 8px;
+    }
+   .pl{
+        width: 150px;
+        border: 1px solid #c7c7c7;
+        box-sizing: border-box;
+        padding: 3.5px 8px;
+        font-family: 'Noto Sans KR', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
+    }
+    .pl:focus {
+        outline: 1px solid royalblue;
+    }
+    .greenPadding {
+      padding: 4px 10px; background-color: #e4faf3; color: #2fb888;border-radius: 5px; font-weight: 600;
+    }
+    .redPadding {
+      padding: 4px 10px; background-color: #fbeef2; color: #d13564;border-radius: 5px; font-weight: 600;
+    }
+    .bluePadding {
+        padding: 4px 10px; background-color: #e3f5ff; color: #219dd1;border-radius: 5px; font-weight: 600;
+    }
+    .font {
+      font-size: 16px;
+    }
+    </style>
+</head>
+<body>
+<div class="body-container">
+    <!--aside-->
+    <th:block th:replace="~{fragment/aside::asideFragment}"></th:block>
+    <!--aside-->
+
+    <div class="main-container">
+        <div class="content-container">
+            <header>
+                <div class="header-title">
+                    <h2>회원목록 리스트</h2>
+                    <h2><i class="fa-solid fa-user-tie" style="margin-right: 5px"></i>코리아피자 관리자</h2>
+                </div>
+            </header>
+            <hr>
+            <div class="content-wrap">
+                <div class="user-list">
+                    <div class="top-option">
+                        <p>회원 등록수 : <span style="color:red">[[${cnt}]]</span>명</p>
+                        <div class="search-style">
+                            <form method="get" action="/admin/userAdminPage" onsubmit="return searchList()">
+                                <select name="searchType" id="searchType" class="pl">
+                                    <option value="">선택</option>
+                                    <option value="userid">아이디</option>
+                                    <option value="username">이름</option>
+                                </select>
+                                <input type="text" name="words" placeholder="검색어 입력">
+                                <input type="submit" value="검색" class="search-btn">
+                            </form>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>아이디</th>
+                            <th>이름</th>
+                            <th>가입일</th>
+                            <th>탈퇴일</th>
+                            <th>회원상태</th>
+                            <th>비고</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="m : ${mem}">
+                        <tr class="open">
+                            <td><span class="bluePadding">[[${m.userId}]]</span></td>
+                            <td><span style="font-weight: 600;">[[${m.userName}]]</span></td>
+                            <td>[[${m.userRegDate}]]</td>
+                            <td th:if="${m.userSt} == '90'" >[[${m.userEndDate}]]</td>
+                            <td th:unless="${m.userSt} == '90'" >-</td>
+                            <td th:if="${m.userSt} == '00'" style="color: green"><span class="greenPadding" >활성화</span></td>
+                            <td th:unless="${m.userSt} == '00'" style="color: red"><span class="redPadding ">탈퇴</span></td>
+                            <td>
+                                <button class="blue" th:onclick="viewUser([[${m.userNum}]])">보기</button>
+                                <button class="tomato" th:onclick="deleteUser([[${m.userNum}]])">삭제</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="list-btn">
+                        <a href="/admin/userAdminPage"><button>목록으로</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-center">
+                <a href="#" th:if="${page.page <= 1}"></a>
+
+                <a th:href="@{/admin/userAdminPage?(page=${page.page-1})}" th:unless="${page.page <= 1}">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+
+                <!-- page number -->
+                <!-- #numbers.sequence() 숫자를 순차적으로 생성하고 +1씩 출력-->
+                <!-- i => 페이지번호(id) -->
+                <a th:each="i : ${ #numbers.sequence(page.startPage, page.endPage, 1) }" th:href="@{/admin/userAdminPage?(page=${i})}">
+                    <th:block th:if="${page.page eq i}">
+                        <span style="color:#f00; ">
+                            <strong>[[${i}]]</strong>
+                        </span>
+                    </th:block>
+                    <th:block th:unless="${page.page eq i}">
+                        <span>
+                            [[${i}]]
+                        </span>
+                    </th:block>
+                </a>
+
+
+                <a href="#" th:if="${page.page >= page.totalPage}" ></a>
+
+                <a th:href="@{/admin/userAdminPage?(page=${page.page + 1})}" th:unless="${page.page >= page.totalPage}">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <!----------------------------------------------------------------------------------------------------->
+            </div>
+        </div>
+        <script>
+            function viewUser(mUserNum) {
+                    location.href = '/admin/viewUser?id='+mUserNum;
+                }
+                function deleteUser(mUserNum) {
+                    if( confirm('회원정보를 삭제하시겠습니까?') ) {
+                        location.href = '/admin/deleteUser?id='+mUserNum;
+                    }
+                }
+
+        function searchList() {
+            let searchType = document.querySelector("#searchType");
+            let words = document.querySelector("input[name=words]");
+
+        if( searchType.options[searchType.selectedIndex].value == "" ) {
+            alert("검색 타입을 선택하세요");
+            searchType.focus();
+            return false;
+        }
+
+        if( words.value == "" ) {
+            alert("검색어를 입력하세요");
+            words.focus();
+            return false;
+        }
+
+    }
+
+</script>
+</body>
+</html>

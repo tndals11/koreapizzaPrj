@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+<title>코리아피자</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/reset.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/height.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
+<style>
+/*---------main영역------------*/
+.main-title {
+    padding-top: 200px;
+    text-align: center;
+  }
+.container {
+  width: 1280px;
+  height: 850px;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+}
+.main-wrap {
+  width: 500px;
+}
+.main-wrap h1{
+  text-align: center;
+  font-size: 30px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.main-wrap p {
+  text-align: center;
+  font-size: 24px;
+  font-weight: lighter;
+  color:  #555;
+  margin: 50px 0;
+}
+.int-area {
+  margin-bottom: 25px;
+}
+.int-area label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.int-area input {
+  padding: 10px 10px 5px;
+  width: 100%;
+  border: 0;
+  background-color: transparent;
+  border-bottom: 1px solid #e7e7e7;
+  font-size: 14px;
+  outline: none;
+  color: black;
+}
+.btn-area #btn {
+  font-family: 'Noto Sans KR', sans-serif;
+  width: 100%;
+  height: 80px;
+  background-color: #cf152d;
+  color: white;
+  font-size: 1.1rem;
+  border: 0;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #333;
+  letter-spacing: 1px;
+  margin-top: 5px;
+  box-shadow: 2px 2px 2px #888;
+  font-weight: bold;
+}
+/* 버튼에 마우스를 올렸을시 나타나는 */
+.btn-area #btn:hover {
+  opacity: 0.9;
+  color: #e7e7e7;
+}
+.caption-wrap {
+  width: 100%;
+  margin-top: 25px;
+}
+.caption {
+  width: 100%;
+  height: 40px;
+  display: flex;
+}
+.caption ul {
+  display: flex;
+  justify-content: center;
+  margin: 0 63px;
+  font-size: 15px;
+}
+.caption span {
+  color: #e7e7e7;
+  margin: 0 32px;
+}
+
+
+</style>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비밀번호찾기 페이지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<!--header-->
+<th:block th:replace="~{fragment/afterLoginHeader::afterHeaderFragment}"></th:block>
+<!--header-->
+<main>
+    <div class="container">
+        <div class="main-title">
+            <h1>비밀번호 재설정</h1>
+        </div>
+        <div class="main-wrap">
+            <p>새로운 비밀번호를 입력해주세요.</p>
+                <div class="int-area">
+                    <label>현재 비밀번호</label>
+                    <input type="password" id="userPasswd" name="userPasswd" class="userPasswd" placeholder="현재 비밀번호를 입력해주세요." required>
+                    <div id="passwd_check1"></div>
+                </div>
+                <div class="int-area">
+                    <label for="new-passwd">새로운 비밀번호</label>
+                    <input type="password" id="new-passwd" name="new-passwd" class="new-passwd" placeholder="비밀번호(8자리이상+영문+숫자+특수문자)">
+                    <div id="passwd_check2"></div>
+                </div>
+                <div class="int-area">
+                    <label for="new-passwd">새로운 비밀번호확인</label>
+                    <input type="password" id="new-passwd-check" name="new-passwd-check" class="new-passwd-check" placeholder="비밀번호 확인">
+                    <div id="passwd_check3"></div>
+                </div>
+                <div class="btn-area">
+                    <button type="button" id="btn">비밀번호 찾기</button>
+                </div>
+        </div>
+    </div>
+</main>
+        <!-- footer -->
+        <th:block th:replace="~{fragment/footer::footerFragment}"></th:block>
+        <!-- footer -->
+<script>
+
+    $(function () {
+           let checkPW = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[~!@#$%^&*()_+])[A-Za-z\d~!@#$%^&*()_+]{8,}$/);
+           let msg = document.querySelector(".msg");
+           let newPasswd = document.querySelector("#new-passwd");
+
+        function checkForm() {
+               $("#userPasswd").blur(function(){
+                    if($("#userPasswd").val() == "" ) {
+                       $("#userPasswd").css("border-color", "#cf152d");
+                       $("#passwd_check1").text("비밀번호를 입력해주세요").css("color", "red");
+                       return false;
+                   } else if (!checkPW.test($("#userPasswd").val())) {
+                      $("#userPasswd").css("border-color", "#cf152d");
+                      $("#passwd_check1").text("비밀번호 형식에 맞게 입력해주세요").css("color", "red");
+                      return false;
+                   }  else {
+                   $("#userPasswd").css("border-color", "green");
+                    $("#passwd_check1").text("")
+                    return true;
+                   }
+               });
+
+               //비밀번호 서로확인
+               $("#new-passwd").blur(function(){
+                    if ( $("#userPasswd").val() == $("#new-passwd").val() ) {
+                         $("#new-passwd").css("border-color", "#cf152d");
+                         $("#passwd_check2").text("현재 비밀번호와 동일합니다 다른 비밀번호를 사용해주세요.").css("color", "red");
+                    } else if ( checkPW.test($("#new-passwd").val()) ) {
+                       $("#new-passwd").css("border-color", "green");
+                       $("#passwd_check2").text("형식에 맞는 비밀번호입니다.").css("color", "green");
+                       return false;
+                   } else {
+                      $("#new-passwd").css("border-color", "#cf152d");
+                      $("#passwd_check2").text("비밀번호(8자리이상+영문+숫자+특수문자)를 사용해주세요.").css("color", "red");
+                   }
+               });
+
+               $("#new-passwd-check").blur(function(){
+                   if($("#new-passwd").val() != $("#new-passwd-check").val()){
+                       $("#new-passwd-check").css("border-color", "#cf152d");
+                       $("#passwd_check3").text("비밀번호와 일치하게 입력해주세요.").css("color", "red");
+                       return false;
+                   }else{
+                       $("#new-passwd-check").css("border-color", "green");
+                       $("#passwd_check3").text("비밀번호가 일치합니다.").css("color", "green");
+                       $("#userName").focus();
+                       return true;
+                   }
+               });
+      }
+      checkForm();
+
+           $("#btn").click(function(){
+               if($("#userPasswd").val() == "" || $("#new-passwd").val() == "" ||  $("#new-passwd-check").val() == "" ){
+                   alert("공백을 입력하세요.");
+                   location.href="/user/updatePasswd";
+                   return false;
+               }else if ($("#new-passwd").val() != $("#new-passwd-check").val()){
+                   alert("비밀번호가 서로 일치하지 않습니다.");
+                   location.href="/user/updatePasswd";
+                   return false;
+               } else if(!checkPW.test($("#userPasswd").val()) || !checkPW.test($("#new-passwd").val()) || !checkPW.test($("#new-passwd-check").val())) {
+                   alert("형식에 맞춰 작성해주세요.")
+                   location.href="/common/register";
+                   return false;
+               }
+
+              $.ajax({
+                 type: "post",
+                 url: "/user/updatePasswd",
+                 data: {newPasswd: newPasswd.value},
+                 dataType: "json",
+                 success: function(res) {
+                        if ( res.msg == "success") {
+                            alert("비밀번호가 변경되었습니다.");
+                            location.href = "/common/login";
+                        } else {
+                            alert("현재 사용하신 비밀번호와 동일하게 입력하였습니다.\n다시 입력해주세요");
+                        }
+                         }
+                 });
+
+           });
+    });
+
+</script>
+</body>
+</html>

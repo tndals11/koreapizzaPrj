@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/main_imgs/pizzatitle.png"/>
+    <title>코리아피자</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/height.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        /* 초기화 */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        ul li {
+          list-style: none;
+        }
+
+        a {
+          color: black;
+          text-decoration: none;
+        }
+
+        /* 헤더/ 상단메뉴 스타일 시작 */
+        nav {
+          border: 0;
+          width: 100%;
+          padding-bottom: 20px;
+          box-shadow: 0px 0px 5px 0 rgba(90, 91, 95, 0.4);
+          position: fixed;
+          background-color: white;
+        }
+
+        .nav-wrap {
+          background-color: white;
+          width: 1280px;
+          margin: 0 auto;
+          padding: 20px 0;
+          color: black;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .nav-wrap #logo {
+          height: 50px;
+        }
+
+        .nav-wrap #logo img {
+          width: 100%;
+          height: 110px;
+          margin-top: -10px;
+        }
+
+        .nav-wrap ul {
+          display: flex;
+          margin-top: 17px;
+        }
+
+        .nav-wrap ul li {
+          list-style: none;
+          font-size: 23px;
+          margin: 0px 25px;
+          padding: 6px 25px;
+        }
+
+        .nav-wrap ul li:hover {
+          cursor: pointer;
+          background-color: #cf152d;
+          color: white;
+          border-radius: 30px;
+        }
+
+        .nav-wrap ul .cart {
+          margin: 0 25px;
+        }
+
+        .nav-wrap ul div img {
+          width: 100%;
+          height: 40px;
+        }
+
+        .nav-wrap ul div img:hover {
+          cursor: pointer;
+        }
+
+        /* 배너이미지 설정 */
+        .bg {
+          padding-top: 122px;
+          width: 100%;
+          background-repeat: no-repeat;
+          background-size: cover;
+          /* background-position: center; */
+          background-color: transparent;
+        }
+
+        /* 카테고리/중간버튼 스타일 시작 */
+        .category {
+          width: 1280px;
+          height: 165px;
+          margin: 38px auto;
+        }
+
+        .category .address ul {
+          display: flex;
+          justify-content: center;
+          padding-top: 7px;
+          background-color: transparent;
+          border-radius: 8px;
+          box-shadow: 0 0 5px 0 rgba(90, 91, 95, 0.4);
+        }
+
+        .category .address ul:hover {
+          cursor: pointer;
+        }
+
+        .category .address ul li {
+          background-color: transparent;
+          color: black;
+          font-size: 27px;
+        }
+
+        .category .address ul li img {
+          width: 100%;
+          height: 40px;
+        }
+
+        .category .address ul li:nth-child(1) {
+          margin-right: 5px;
+        }
+
+        .category .order-btn {
+          margin-top: 25px;
+          height: 100px;
+        }
+
+        .category .order-btn ul {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          background-color: white;
+          border-radius: 8px;
+          box-shadow: 0 0 5px 0 rgba(90, 91, 95, 0.4);
+        }
+
+        .category .order-btn ul div {
+          margin-top: 5px;
+        }
+
+        .category .order-btn ul:hover {
+          cursor: pointer;
+          border: 0;
+          border: 3px solid #cf152d
+        }
+
+        .category .order-btn ul li:nth-child(2) {
+          font-size: 30px;
+          margin: 20px 0 0 25px;
+        }
+
+        .category .order-btn ul li img {
+          width: 100%;
+          height: 70px;
+        }
+
+        .category .order-btn ul>li .arrow {
+          margin-left: 25px;
+          color: #cf152d;
+          font-size: 35px;
+        }
+
+
+        /* main 영역 */
+        .main-title {
+          padding-top: 200px;
+          text-align: center;
+        }
+
+        .container {
+          width: 100%;
+        }
+
+        .container-wrap {
+          display: flex;
+          width: 1280px;
+          margin: 0 auto;
+          padding-top: 50px;
+          padding-bottom: 100px;
+        }
+
+        .left-container {
+          width: 60%;
+        }
+
+        .fixed-wrap {
+          position: fixed;
+        }
+
+        .left-title {
+          margin: 20px 30px;
+          display: flex;
+          justify-content: space-between;
+          height: 35px;
+          align-items: end;
+        }
+
+        .left-title h1 {
+          font-size: 24px;
+        }
+
+        .left-title a {
+          font-family: 'Noto Sans KR', sans-serif;
+          font-size: 17px;
+          font-weight: bold;
+          border: 0;
+        }
+
+        .left-title button:hover {
+          cursor: pointer;
+        }
+
+        /* content2번 영역 */
+        .content2 {
+          width: 700px;
+          height: 140px;
+          margin-top: 20px;
+          margin-bottom: 50px;
+          padding-left: 30px;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+          border-radius: 15px;
+        }
+
+        .content2 ul {
+          display: flex;
+          align-items: center;
+        }
+
+        .content2 ul li {
+          margin-top: 9px;
+          font-size: 20px;
+        }
+
+        .logo-box {
+          width: 120px;
+          height: 100px;
+          padding: 20px 20px;
+          margin: 0 auto;
+        }
+
+        .menu-box {
+          display: flex;
+          align-items: center;
+          padding-left: 70px;
+          width: 400px;
+          height: 120px;
+          padding: 15px;
+          margin-left: 40px;
+        }
+
+        .menu-box h6 {
+          font-size: 18px;
+          width: 100%;
+        }
+
+        .menu-box p {
+          padding-top: 7px;
+          font-size: 16px;
+        }
+
+        .price-box {
+          margin-right: 70px;
+          width: 120px;
+          text-align: right;
+        }
+
+        .btn-box {
+          margin-right: 25px;
+          padding-top: 5px;
+        }
+
+        .btn-box button {
+          border: 0;
+          background-color: transparent;
+          cursor: pointer;
+        }
+
+        /* contetn3번 영역 */
+        .content3-title {
+          margin: 20px 30px;
+          font-size: 24px;
+        }
+
+        .content3-title h1 {
+          font-size: 24px;
+        }
+
+        .content3 {
+          width: 700px;
+          height: 150px;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+          border-radius: 20px;
+        }
+
+        .content3 ul {
+          display: flex;
+          list-style: none;
+        }
+
+        .img-box {
+          width: 100px;
+          height: 100px;
+          margin-top: 25px;
+          margin-right: 20px;
+          text-align: center;
+          margin-left: 30px;
+        }
+
+        .img-box img {
+          padding-top: 15px;
+        }
+
+        .text-box {
+          width: 520px;
+          margin-top: 25px;
+        }
+
+        .text-box textarea {
+          font-family: 'Noto Sans KR', sans-serif;
+          width: 520px;
+          height: 100px;
+          border: none;
+          resize: none;
+          box-shadow: inset 3px 3px 10px #e6e6e6;
+          padding: 7px 10px;
+          font-size: 16px;
+        }
+
+        .text-box textarea:focus {
+          outline: none;
+        }
+
+        .text-box button {
+          border: 0;
+          cursor: pointer;
+          border: 1px solid #444;
+          background-color: transparent;
+          padding: 0px 10px;
+
+          border-radius: 8px;
+          float: right;
+          font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .text-box button:hover {
+          opacity: 0.9;
+        }
+
+        /* right-container 영역 */
+        .right-container {
+          width: 100%;
+          height: 100%;
+          padding-left: 100px;
+        }
+
+        .right-title {
+          width: 200px;
+          height: 0px;
+          margin-left: 40px;
+          margin-bottom: 55px;
+        }
+
+        .right-title p {
+          font-size: 24px;
+          font-weight: bold;
+        }
+
+        .right-wrap {
+          position: sticky;
+          width: 500px;
+          height: 260px;
+          border: 1000px;
+          /* border: 1px solid #757575; */
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+          border-radius: 20px;
+
+        }
+
+        .item-box {
+          margin: 0 auto;
+          width: 440px;
+          height: 200px;
+          padding-top: 20px;
+        }
+
+        .item-box ul li {
+          display: flex;
+          padding-top: 20px;
+          padding-bottom: 7px;
+          justify-content: space-between;
+          border-bottom: 1px solid black;
+          font-size: 18px;
+        }
+
+        .item-box ul li h6 {
+          font-size: 20px;
+        }
+
+        .box {
+          width: 100%;
+          height: 50px;
+          display: flex;
+          justify-content: space-between;
+          margin: 15px 0;
+        }
+
+        .box .allDelete-btn {
+          border: 0;
+          border: 1px solid #444;
+          background-color: black;
+          color: white;
+          padding: 10px 70px;
+          font-family: 'Noto Sans KR', sans-serif;
+          font-size: 17px;
+          cursor: pointer;
+        }
+
+        .box .payment {
+          border: 0;
+          border: 1px solid #444;
+          background-color: #cf152d;
+          color: white;
+          padding: 7px 70px;
+          font-family: 'Noto Sans KR', sans-serif;
+          font-size: 17px;
+          cursor: pointer;
+        }
+
+        .box .allDelete-btn:hover {
+          opacity: 0.9;
+        }
+
+        .box .payment:hover {
+          opacity: 0.9;
+        }
+
+        /* footer 스타일 시작 */
+        footer {
+          background-color: #444;
+          padding: 30px 0 10px 0;
+        }
+
+        .footer-wrap {
+          width: 1280px;
+          margin: 0 auto;
+        }
+
+        .footer-wrap h2 {
+          color: #aaa;
+          letter-spacing: 2px;
+          font-size: 25px;
+        }
+
+        .footer-top span {
+          color: white;
+          margin-left: 15px;
+        }
+
+        .footer-top span i:hover {
+          color: gray;
+          transition: 0.5s;
+          cursor: pointer;
+        }
+
+        .footer-top {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .footer-sns {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+
+        .footer-sns span {
+          color: #aaa;
+          font-size: 25px;
+        }
+
+        .footer-sns span i:hover {
+          color: white;
+          transition: 0.5s;
+          cursor: pointer;
+        }
+
+        .footer-main {
+          width: 1280px;
+        }
+
+        .footer-content {
+          font-size: 14px;
+          color: #aaa;
+          text-align: left;
+          margin-top: 20px;
+        }
+
+        .footer-content ul li:nth-child(2) {
+          margin-top: 5px;
+        }
+
+        .footer-content ul li:nth-child(3) {
+          margin-top: 5px;
+        }
+
+        .footer-content ul li:nth-child(4) {
+          margin-top: 5px;
+          margin-bottom: 50px;
+        }
+
+        .footer-bottom {
+          border-top: 1px solid white;
+          font-size: 12px;
+          color: #aaa;
+          text-align: center;
+        }
+
+        .footer-bottom p {
+          margin-top: 7px;
+        }
+
+        .footer-sns span a {
+          color: white;
+        }
+    </style>
+
+    <!-- 포트원 결제 -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+</head>
+
+<body>
+<!--header-->
+<div th:if = "${session.user == null}">
+    <th:block th:replace="~{fragment/header::headerFragment}"></th:block>
+</div>
+<div th:if = "${session.user != null}">
+    <th:block th:replace="~{fragment/afterLoginHeader::afterHeaderFragment}"></th:block>
+</div>
+<!--header-->
+
+<!-- main 영역 -->
+<div class="main-title">
+    <h1>장바구니</h1>
+</div>
+<main>
+    <div class="container">
+        <div class="container-wrap">
+            <div class="left-container">
+                <div class="order-wrap">
+                    <div class="left-title">
+                        <h1>주문 메뉴 정보</h1>
+                        <a th:href="@{/common/premium}"><i class="fa-regular fa-square-plus"></i> 더 담으러 가기</a>
+                    </div>
+                    <!-- localstorage append  -->
+                </div>
+                <!-- 요청사항 -->
+                <div class="content3-title">
+                    <h1>요청사항</h1>
+                </div>
+                <div class="content3">
+                    <form action="">
+                        <ul>
+                            <li class="img-box">
+                                <img src="/images/cart_imgs/envelope.png">
+                            </li>
+                            <li class="text-box">
+                                <textarea name="text" id="text" cols="30" rows="5" placeholder="요청사항 내용..."></textarea>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+            <!-- right-container 영역 -->
+            <div class="right-container">
+                <div class="fixed-wrap">
+                    <div class="right-title">
+                        <p>결제금액
+                        <p>
+                    </div>
+                    <div class="right-wrap">
+                        <div class="item-box">
+                            <ul>
+                                <li>
+                                    <p>총 주문 수량</p>
+                                    <p class="total-count"></p>
+                                </li>
+                                <li>
+                                    <p>총 상품 금액</p>
+                                    <p class="total-price"></p>
+                                </li>
+                                <li>
+                                    <h6>총 주문 금액</h6>
+                                    <p class="order-price"></p>
+                                </li>
+                            </ul>
+                            <div class="box">
+                                <button type="submit" class="allDelete-btn">전체삭제</button>
+                                <button class="payment" th:attr="onclick='requestPay(\'' + ${userId} + '\', \'' + ${userName} + '\')'">결제하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- footer -->
+<th:block th:replace="~{fragment/footer::footerFragment}"></th:block>
+<!-- footer -->
+
+<script>
+
+    $(document).ready(function () {
+
+      function display() {
+
+        var cartitems = JSON.parse(localStorage.getItem("cart"));
+
+        //반복할 때 마다 해당 인덱스 생성 -> 인덱스로 삭제
+        cartitems.forEach((item, index) => {
+          $('.order-wrap').append(
+            `<div class="content2" data-index="${index}">
+          <form name="order-info" action="#" method="post">
+          <ul>
+            <li class="logo-box">
+              <img src="${item.itemImg}">
+            </li>
+            <li class="menu-box">
+              <h6>${item.itemName} ${item.itemSize} &times; ${item.count}</h6>
+            </li>
+            <li class="price-box">
+              <p>${(parseInt(item.itemPrice.replace(',', '')) * item.count).toLocaleString('ko-KR')}원</p>
+            </li>
+            <li class="btn-box">
+              <button type="button" class="delete-btn"><img src="/images/cart_imgs/deletelogo.png"></button>
+            </li>
+          </ul>
+        </form>
+      </div>
+    `);
+        });
+
+        var cartTotalCount = JSON.parse(localStorage.getItem("cart_totalCount"));
+        $('.total-count').append(cartTotalCount + '개');
+
+        var cartTotalPrice = JSON.parse(localStorage.getItem("cart_totalPrice"));
+        $('.total-price').append(cartTotalPrice.toLocaleString('ko-KR') + '원');
+        $('.order-price').append(cartTotalPrice.toLocaleString('ko-KR') + '원');
+
+
+        //삭제 기능
+        $('.delete-btn').on('click', function () {
+          if (confirm("해당 상품을 삭제하시겠습니까?")) {
+            alert("상품이 삭제되었습니다.")
+            var indexToRemove = $(this).closest('.content2').data('index'); //배열 인덱스로 삭제
+            cartitems.splice(indexToRemove, 1); //배열의 해당 인덱스의 내용 제거
+            localStorage.setItem('cart', JSON.stringify(cartitems)); //로컬스토리지 업데이트
+            $(this).closest('.content2').remove();
+
+            //로컬스토리지 업데이트
+            var newTotalCount = cartitems.reduce((acc, item) => acc + item.count, 0); //reduce(누적값(accumulate), 현재값, 인덱스)
+            var newTotalPrice = cartitems.reduce((acc, item) => acc + (parseInt(item.itemPrice.replace(',', '')) * item.count), 0);
+            localStorage.setItem('cart_totalCount', JSON.stringify(newTotalCount));
+            localStorage.setItem('cart_totalPrice', JSON.stringify(newTotalPrice));
+
+            //화면 업데이트(총 수량, 총 가격, 주문 가격)
+            $('.total-count').text(newTotalCount + '개');
+            $('.total-price').text(newTotalPrice.toLocaleString('ko-KR') + '원');
+            $('.order-price').text(newTotalPrice.toLocaleString('ko-KR') + '원');
+
+            //장바구니가 비었으면
+            if (!cartitems || cartitems.length === 0) {
+              //다른 주소로 이동
+              window.location.replace('/common/emptyCart');
+              return;
+            }
+          }
+        });
+
+      }
+      display();
+
+      $('.allDelete-btn').on('click', function (e) {
+        e.preventDefault();
+
+        if (confirm("장바구니 안의 모든 상품을 삭제하시겠습니까?")) {
+          alert("삭제되었습니다.");
+          localStorage.removeItem("cart");
+          localStorage.removeItem("cart_totalCount");
+          localStorage.removeItem("cart_totalPrice");
+
+          window.location.href = '/common/emptyCart';
+        }
+      });
+    });
+
+
+    //카카오페이 결제
+    function requestPay(userId, userName) {
+      var cart = JSON.parse(localStorage.getItem("cart"));
+      var orders = cart.map(item => ({ itemName: item.itemName, itemCount: item.count }));
+      var itemNameAndCount = orders.map(item => `${item.itemName} ${item.itemCount}개`).join(', ');
+      var inquiry = document.getElementById("text").value;
+      var totalCount = localStorage.getItem("cart_totalCount");
+      var totalPrice = localStorage.getItem("cart_totalPrice");
+      var id = new Date().getTime();
+
+      IMP.init('imp80770151');
+      IMP.request_pay({
+        pg: "kakaopay.TC0ONETIME",
+        pay_method: 'card',
+        merchant_uid : '주문번호 : ' + new Date().getTime(),
+        name : itemNameAndCount,
+        amount : totalPrice,
+        buyer_name : userName,
+        //buyer_email : userId,
+        //buyer_tel : '010-1234-5678',
+        //buyer_addr : '서울특별시 강남구 삼성동',
+        //buyer_postcode : '123-456'
+      }, function (rsp) { // callback
+
+          if (rsp.success) {
+            var msg = '결제가 완료되었습니다.';
+            alert(msg);
+
+            $.ajax({
+                type: "post",
+                url: "/user/cart",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify({ id : id, userId: userId, userName: userName, itemNameAndCount: itemNameAndCount, inquiry: inquiry, totalCount: totalCount, totalPrice: totalPrice }),
+                success: function (result) {
+                  console.log("성공!!!");
+                  localStorage.clear();
+                  location.href = "/user/afterLogin";
+                  console.log(result);
+                },
+                error: function (error) {
+                  console.error("실패");
+                }
+            });
+
+          } else {
+            var errorMsg = '결제에 실패하였습니다.';
+            alert(errorMsg);
+          }
+      });
+    }
+
+</script>
+</body>
+
+</html>
